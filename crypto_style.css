@@ -3,3 +3,26 @@ div.content_block {
 	margin-right: auto;
 	width: 50%;
 }
+
+img {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+hr {
+	border: 1px solid black;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table, th {
+	border: 1px solid black;
+	font-weight: inherit;
+}
+
+tr.col_label {
+	font-weight: bold;
+}

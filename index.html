@@ -140,7 +140,39 @@ Assuming the input message is a string of alphabetic characters this simple hash
 <b>Notation:</b> (+) denotes addition, mod denotes the modulo operation<br>
 <b>Source:</b> en.wikipedia.org/wiki/Hash_function
 </p>
-<hr>
+
+<p>
+<h3>Cryptographic Hash Function</h3>
+The fundamental difference between a hash function and a cryptographic hash function is that it is practically impossible to invert a cryptographic hash function, which is a one-way function. In life there are many one-way functions. For instance it is easy to light a match, but once lit it is practically impossible to return it to its initial state.
+</p>
+<p>
+In the example hash function above, the inability to invert it would imply that given the hash value $0$ it is impossible to guess that it was derived from the message ALICE. This is clearly not true which is why the hash function above is not a cryptographic hash function.
+</p>
+Getting more technical a cryptographic hash function should satisfy the following properties.
+<ul>
+<li>
+<b>Pre-image resistance:</b>
+Given a hash value $h$ it should be difficult to find a message $m$ such that,
+$$
+h = hash(m)
+$$
+</li>
+<li>
+<b>Second pre-image resistance:</b>
+Given an input $m_1$, it should be difficult to find a different input $m_2$ such that,
+$$
+hash(m_1) = hash(m_2)
+$$
+</li>
+<li>
+<b>Collision resistance:</b>
+It should be difficult to find two different messages $m_1$ and $m_2$ such that.
+$$
+hash(m_1) = hash(m_2)
+$$
+</li>
+</ul>
+<b>Source:</b> en.wikipedia.org/wiki/Cryptographic_hash_function
 </div>
 </body>
 </html>

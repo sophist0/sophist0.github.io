@@ -1,7 +1,122 @@
 <html>
-<h1>Hello World!</h1>
+<head>
+<title>Crypto Notes</title>
+</head>
+<body>
+<h1>Preliminary Concepts</h1>
 
+<div>
+<h2>Hash Function</h2>
 <p>
-The best site ever.......
+<ul>
+	<li>Maps a message m of arbitrary size to a fixed size hash value, hash(m)</li>
+	<li>Scrambles the information in m such that the hash functions hash value is uniformly distributed across its possible values.</li>
+	<li>It is fast to compute</li>
+	<li>It is deterministic</li>
+</ul>
+
+Notice that 2. leads to a corollary
+<ul>
+<li>A hash function minimizes the probability that two distinct messages m1 and m2 have the same hash value. Which can be formally expressed as minimizing the probability that
+
+				m1 ≠ m2 	and 	hash(m1) = hash(m2)</li>
+</ul>
+
+Corollary 5. is a corollary of 2. because 2. states that hash(m) for any message m is uniformly distributed over all possible hash values. Additionally it is called a hash collision if it is true that m1 ≠ m2 and hash(m1) = hash(m2).
 </p>
+<p>
+Example of a simple hash function is<br>
+
+<img src="images/hash_func.png"><br>
+
+Assuming the input message is a string of alphabetic characters this simple hash function outputs an integer between 0 and 4. So if we input messages ALICE and BOB into this hash function we get hashes 0 and 4 as shown in the table below.
+</p>
+<table style="width:100%">
+	<tr>
+    	<th>Input</th>
+    	<th>Current Char.</th> 
+    	<th>Char. to Dec.</th>
+	<th>(+)</th>
+	<th>mod 5</th>
+	<th>Output</th>
+  	</tr>
+	<tr>
+    	<th>None</th>
+    	<th>None</th>
+    	<th>None</th>
+    	<th>None</th>
+    	<th>None</th>
+    	<th>None</th>
+  	</tr>
+	<tr>
+    	<th>Alice</th>
+    	<th>A</th>
+    	<th>1</th>
+    	<th>1</th>
+    	<th>1</th>
+    	<th></th>
+  	</tr>
+	<tr>
+    	<th></th>
+    	<th>L</th>
+    	<th>12</th>
+    	<th>13</th>
+    	<th>3</th>
+    	<th></th>
+  	</tr>
+	<tr>
+    	<th></th>
+    	<th>I</th>
+    	<th>9</th>
+    	<th>12</th>
+    	<th>2</th>
+    	<th></th>
+  	</tr>
+	<tr>
+    	<th></th>
+    	<th>C</th>
+    	<th>3</th>
+    	<th>5</th>
+    	<th>0</th>
+    	<th></th>
+  	</tr>
+	<tr>
+    	<th></th>
+    	<th>E</th>
+    	<th>5</th>
+    	<th>10</th>
+    	<th>0</th>
+    	<th>0</th>
+  	</tr>
+	<tr>
+    	<th>BOB</th>
+    	<th>B</th>
+    	<th>2</th>
+    	<th>2</th>
+    	<th>2</th>
+    	<th></th>
+  	</tr>
+	<tr>
+    	<th></th>
+    	<th>O</th>
+    	<th>15</th>
+    	<th>17</th>
+    	<th>2</th>
+    	<th></th>
+  	</tr>
+	<tr>
+    	<th></th>
+    	<th>B</th>
+    	<th>2</th>
+    	<th>4</th>
+    	<th>4</th>
+    	<th>4</th>
+  	</tr>
+</table>
+<p>
+Notation: (+) denotes addition, mod denotes the modulo operation<br>
+Source: en.wikipedia.org/wiki/Hash_function
+</p>
+</div>
+</body>
 </html>

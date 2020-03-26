@@ -14,7 +14,7 @@ MathJax = {
 </script>
 </head>
 <body>
-
+<div class="hspacer"></div>
 <div class="content_block">
 <h1>Crypto Notes</h1>
 <hr>
@@ -24,9 +24,9 @@ The goal of these notes is to serve as a record of my own understanding of crypt
 <p>
 I had also hoped that GitHub Pages had some great whizzbang plug and play templates which would make my notes look pro! Not so much, so bear with me as I refine there presentation.
 </p>
+
 <h2>Preliminary Concepts</h2>
 <hr>
-
 <p>
 <h3>Hash Function</h3>
 A hash function is a function that,
@@ -140,7 +140,10 @@ Assuming the input message is a string of alphabetic characters this simple hash
 <b>Notation:</b> (+) denotes addition, mod denotes the modulo operation<br>
 <b>Source:</b> en.wikipedia.org/wiki/Hash_function
 </p>
+<hr>
 
+
+<div class="hspacer"></div>
 <p>
 <h3>Cryptographic Hash Function</h3>
 The fundamental difference between a hash function and a cryptographic hash function is that it is practically impossible to invert a cryptographic hash function, which is a one-way function. In life there are many one-way functions. For instance it is easy to light a match, but once lit it is practically impossible to return it to its initial state.
@@ -172,7 +175,66 @@ hash(m_1) = hash(m_2)
 $$
 </li>
 </ul>
+<p>
 <b>Source:</b> en.wikipedia.org/wiki/Cryptographic_hash_function
+</p>
+<hr>
+
+
+<div class="hspacer"></div>
+<p>
+<h3>Symmetric-key cryptography</h3>
+To motivate public-key cryptography I’m going to introduce symmetric key cryptography. In symmetric key cryptography the same secret key is used to both encode and decode a message. One of the simplest symmetric key ciphers is the Caesar shift cipher. Given a message text m and secret key $k$, the message with spaces removed and letters replaced by the integers $1$ through $26$ is encoded as
+$$
+c = (m+k)~mod~26
+$$
+and is decoded as
+$$
+\begin{align}
+(c-k)~mod~26&
+= ((m+k)~mod~26 -k)~mod~26\\
+&= (m+k)-k)~mod~26\\
+&= m~mod~26\\
+&= m
+\end{align}
+$$
+For example say Alice wants to send Bob the message 
+$$
+bewareofbrutus
+$$
+using a Caesar shift cipher and the shared secret key $k=1$. The corresponding encoded message or ciphertext is
+$$
+cfxbsfpgcsvuvt
+$$
+as each character in the message is replaced by the character $1$ space to its left in the alphabet and wrapping around at ‘z’.  Bob knowing $k=1$ can then decode this ciphertext by replacing each character with the character one space to its right and wrapping around at ‘a’.
+</p>
+<p>
+The Caesar shift cipher is a very simple encryption scheme. Practical symmetric cryptography schemes like Advanced Standard Encryption (AES) are much more complicated. But the key takeaway is for Alice and Bob to communicate in a symmetric cryptography scheme they must share a secret key.
+</p>
+<p>
+Now let's say Alice and Bob have a friend Tom. If Alice wants to communicate privately with Bob they must share a secret key $k_{AB}$ and if Alice wants to communicate privately with Bob they must share a secret key $k_{AT}$. Finally if Bob wants to communicate privately with Tom they must share a secret key $k_{BT}$. This in only three secret keys but say there are $n$ people who want to communicate then under a symmetric cryptography scheme each user would have to have $n-1$ unique secret keys and in the entire cryptography scheme would have to generate and maintain,
+$$
+\frac{n (n-1)}{2}
+$$
+secret keys. So if $n$ is earth’s population which is about $7.5 \times 10^9$ that works out to about $2.8 \times 10^{19}$ secret keys, which becomes a challenge to generate and maintain.
+</p>
+<p>
+Of course most people don’t communicate with every other person on earth. So why is it necessary to generate all n (n-1) / 2 keys? The short answer is that it is not necessary thanks to public-key cryptography. But let’s give an example where it might otherwise be necessary to generate all these keys.
+</p>
+<p>
+Say Alice, Bob, and Tom want to communicate privately with one another. How do they distribute keys $k_{AB}$, $k_{AT}$, and $k_{BT}$? Perhaps Alice chooses $k_{AB}$ and $k_{AT}$ and gives them to Bob and Tom in super secret meet ups. But clearly if Alice wants to communicate with $n$ people, meeting all of them in person to give them a secret key is not practical. So instead Alice mails Bob and Tom their secret keys, eliminating the need for super secret meet ups. But Tom is curious about Alice’s private communications with Bob, so Tom intercepts the letter and copies the secret key $k_{AB}$ before forwarding it to Bob. Tom is then able to read all of Alice and Bob’s communications without either of them knowing that he is doing so. This of course undermines the entire reason for setting up a cryptographic communication scheme in the first place.
+</p>
+<p>
+So instead say Alice, Bob, and Tom appeal to a trusted party, Server. Server generates all the secret keys and is always available for super secret meet ups to hand them off in person. The first problem with this distribution scheme is that in the worst case Server will have to generate and maintain $\frac{n(n-1)}{2}$ keys to make sure that he doesn’t accidentally distribute a key to more than one pair of users. The second problem is can Alice, Bob, and Tom really trust Server? Server can read everyone's messages. Again this seems to undermine the entire reason for using a cryptographic communication scheme.
+</p>
+<p>
+Public-key cryptography while much more computationally intensive than symmetric key cryptography avoids the problem of exchanging secret keys entirely. In fact public-key cryptographic schemes are often used to set up secure communication channels via which individuals initially exchange secret keys for symmetric key cryptography schemes.
+</p>
+<p>
+<b>Sources:</b> en.wikipedia.org/wiki/Caesar_cipher
+</p>
+<hr>
 </div>
+<div class="hspacer"></div>
 </body>
 </html>

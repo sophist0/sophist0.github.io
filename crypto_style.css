@@ -4,6 +4,13 @@ div.content_block {
 	width: 50%;
 }
 
+div.hspacer {
+	height: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
 h1 {
 	margin-bottom: -16px;
 }

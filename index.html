@@ -2,43 +2,54 @@
 <head>
 <title>Crypto Notes</title>
 <link rel="stylesheet" type="text/css" href="crypto_style.css">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 
 <div class="content_block">
 <h1>Crypto Notes</h1>
 <hr>
-
-The goal of these notes is to serve as a record of my own understanding of crypto currencies and related concepts. I find writing formal notes forces me to confront gaps in my understanding. Also I personally do not invest in crypto currencies as I cannot afford to lose the money and I do not suggest that anyone else should except for educational purposes. What interests me about crypto currencies is not so much their value but their relative success as persistent distributed applications. These notes no doubt reflect this interest.<br><br>
-
-I had also hoped that GitHub Pages had some great whizzbang plug and play templates which would make my notes look pro! Not so much, so bear with me as I refine their presentation.
-<hr>
-
+<p>
+The goal of these notes is to serve as a record of my own understanding of crypto currencies and related concepts. I find writing formal notes forces me to confront gaps in my understanding. Also I personally do not invest in crypto currencies as I cannot afford to lose the money and I do not suggest that anyone else should except for educational purposes. What interests me about crypto currencies is not so much their value but their relative success as persistent distributed applications. These notes no doubt reflect this interest.
+</p>
+<p>
+I had also hoped that GitHub Pages had some great whizzbang plug and play templates which would make my notes look pro! Not so much, so bear with me as I refine there presentation.
+</p>
 <h2>Preliminary Concepts</h2>
 <hr>
 
-<h3>Hash Function</h3>
 <p>
-A hash function:
-<ul>
-	<li>Maps a message m of arbitrary size to a fixed size hash value, hash(m).</li>
+<h3>Hash Function</h3>
+A hash function is a function that,
+<ol>
+	<li>Maps a message m of arbitrary size to a fixed size hash value, $hash(m)$.</li>
 	<li>Scrambles the information in m such that the hash functions hash value is uniformly distributed across its possible values.</li>
 	<li>Is fast to compute.</li>
 	<li>Is deterministic.</li>
-</ul>
+</ol>
 
-Notice that 2. leads to a corollary
+Notice that 2. leads to a corollary,
 <ul>
-<li>A hash function minimizes the probability that two distinct messages m1 and m2 have the same hash value. Which can be formally expressed as minimizing the probability that
-
-				m1 ≠ m2 	and 	hash(m1) = hash(m2)</li>
+<li>A hash function minimizes the probability that two distinct messages $m_1$ and $m_2$ have the same hash value. Which can be formally expressed as minimizing the probability that,
+$$
+m_1 \neq m_2 	\hspace{2em} \text{and} \hspace{2em} 	hash(m_1) = hash(m_2)
+$$
+</li>
 </ul>
 
-Corollary 5. is a corollary of 2. because 2. states that hash(m) for any message m is uniformly distributed over all possible hash values. Additionally it is called a hash collision if it is true that m1 ≠ m2 and hash(m1) = hash(m2).
+This is a corollary of 2. because 2. states that hash(m) for any message m is uniformly distributed over all possible hash values. Additionally it is called a hash collision if it is true that $m_1 \neq m_2$ and $hash(m_1) = hash(m_2)$.
 </p>
 <p>
-Example of a simple hash function is<br>
-
+An example of a simple hash function is,<br>
 <img src="images/hash_func.png"><br>
 
 Assuming the input message is a string of alphabetic characters this simple hash function outputs an integer between 0 and 4. So if we input messages ALICE and BOB into this hash function we get hashes 0 and 4 as shown in the table below.
@@ -125,7 +136,6 @@ Assuming the input message is a string of alphabetic characters this simple hash
     	<th>4</th>
   	</tr>
 </table>
-<hr>
 <p>
 <b>Notation:</b> (+) denotes addition, mod denotes the modulo operation<br>
 <b>Source:</b> en.wikipedia.org/wiki/Hash_function

@@ -183,7 +183,7 @@ $$
 
 <div class="hspacer"></div>
 <p>
-<h3>Symmetric-key cryptography</h3>
+<h3>Symmetric-Key Cryptography</h3>
 To motivate public-key cryptography I’m going to introduce symmetric key cryptography. In symmetric key cryptography the same secret key is used to both encode and decode a message. One of the simplest symmetric key ciphers is the Caesar shift cipher. Given a message text m and secret key $k$, the message with spaces removed and letters replaced by the integers $1$ through $26$ is encoded as
 $$
 c = (m+k)~mod~26
@@ -234,7 +234,122 @@ Public-key cryptography while much more computationally intensive than symmetric
 <b>Sources:</b> en.wikipedia.org/wiki/Caesar_cipher
 </p>
 <hr>
-</div>
+
 <div class="hspacer"></div>
+<p>
+<h3>Public-key cryptography</h3>
+So how does public-key encryption work? Imagine for a moment that Alice and Bob each generate a pair of keys for themselves, a public key $k_{pub}$ which they send to anyone who requests it and a private key $k_{pri}$ which is known only to them. If Alice wants to send Bob an encrypted message $m$ she encrypts it with Bob’s public key $k_{b,pub}$.
+$$
+c = encrypt(m,k_{b,pub})
+$$
+
+Bob on receiving $c$, decrypts it using his private key $k_{b,pri}$.
+$$
+m = decrypt(c,k_{b,pri})
+$$
+</p>
+<p>
+An elegant solution to the problem of key distribution. Why did it take until the 1970s for James H. Ellis to discover public-key cryptography when symmetric key cryptography has been around for thousands of years? Well it turns out that choosing the right public and private key pairs and the right encryption and decryption algorithms of that if an attacker known $k_{pub}$, $encrypt(*)$, $decrypt(*)$, and ciphertext $c$, they cannot easily guess $k_{pri}$ or message m is non-trivial.
+</p>
+<p>
+To see this I will explain how Rivest–Shamir–Adleman (RSA) public-key cryptosystem works. But first let’s introduce the modular congruence.  Modular congruence is a relation denoted as
+$$
+a \equiv b~(mod~n)
+$$
+Where $a-b = kn$ for some integer $k$. For instance
+$$
+\begin{align}
+2 &≡ 2~(mod~5)\\
+7 &≡ 2~(mod~5)\\
+12 &≡ 2~(mod~5)\\
+etc.
+\end{align}
+$$
+This is slightly different than stating equality after the modulo operation. For instance, $12~mod~5 = 2$.
+</p>
+<p>
+The basic idea of RSA is to select three large integers $e$, $d$, and $n$. Then given a message text $m$ convert it into binary and then into its corresponding integer representation. If $m \geq n$ slice up the original message until $0 \leq m < n$.
+</p>
+<p>
+The public key is $e$ and $n$ and the encryption function is defined as
+$$
+c \equiv m^e~(mod~n)
+$$
+The private key is $d$ and the decryption function is defined as
+$$
+\begin{align}
+c^d~(mod~n) &= (m^e~(mod~n))^d~(mod~n)\\
+&= m^{ed}~(mod~n)\\
+&\equiv m
+\end{align}
+$$
+</p>
+<p>
+To understand why the $m$ is congruent with $m^{ed}~(mod~n)$ requires understanding how $n$, $e$, and $d$ are selected. Trappe summarized this selection processes as follows
+<ol>
+<li>Choose secret primes $p$ and $q$ and computes $n = pq$.</li>
+<li>Choose $e$ with $gcd(e,(p-1)(q-1)) = 1$.</li>
+<li>Compute $d$ such that $de ≡ 1~(mod~(p-1)(q-1))$.</li>
+</ol>
+</p>
+<p>
+Now although it can be shown to be unnecessary, assume $gcd(m,n) = 1$. Then Euler’s Theorem gives
+$$
+m\phi(n) \equiv 1~(mod~n)
+$$
+where $\phi(n)$ Euler totient function and given $n = pq$ it follows that $\phi(n) = (p-1)(q-1)$.
+</p>
+<p>
+Now recall we also selected $d$ such that $d^e ≡ 1~(mod~(p-1)(q-1))$. Therefore it follows that $d^e = 1 + k\phi(n)$ for some integer $k$ and,
+$$
+\begin{align}
+c^d &\equiv (m^e)^d~(mod~n)\\
+&\equiv m^{1+kφ(n)}~(mod~n)\\	
+&\equiv m(m^{\phi(n)})^k~(mod~n)\\		
+&\equiv m(1)^k~(mod~n) \hspace{4em} \text{from Euler’s Theorem}\\
+&\equiv m
+\end{align}	
+$$
+</p>
+<p>
+Now why is RSA secure? First it is hard to guess the message $m$ given ciphertext $m^e$. Second given $e$ and $n$ its hard to compute $d$ because $n$ is hard to factor into $p$ and $q$. Where by hard we mean there is no known algorithm that can factor a $b$-bit number in $O(bk)$ time or less for some constant $k$.
+</p>
+<p>
+<b>Sources:</b><br> 
+en.wikipedia.org/wiki/Public-key_cryptography<br>
+en.wikipedia.org/wiki/Modular_arithmetic<br>
+en.wikipedia.org/wiki/RSA_(cryptosystem)<br>
+en.wikipedia.org/wiki/Integer_factorization<br>
+en.wikipedia.org/wiki/Big_O_notation<br>
+Introduction to Cryptography with Coding Theory by Wade Trappe and Lawrence Washington
+</p>
+<hr>
+
+<div class="hspacer"></div>
+<p>
+<h3>Digital Signatures</h3>
+<p>
+Once you understand the concepts of public-key cryptography digital signatures are pretty straight forward. Say Alice wants to send Bob a message m and she doesn’t care who reads it she just wants Bob to know it was from her. Then she would sign the message with her private key d. Anyone with Alice’s public key $(e,n)$ could of course recover the message but they would also know that only Alice had the secret d with which the message was signed therefore it must be from her. Under the RSA cryptosystem this digital signature has the form,
+$$
+m_{signed} = m^d
+$$
+</p>
+<p>
+Signature verification is the same procedure as public key encryption.
+$$
+(m_{signed})^e \equiv (m^d)^e~(mod~n)\\
+\equiv m^{ed}~(mod~n)\\
+\equiv m
+$$
+</p>
+<p>
+<b>Sources:</b><br>
+en.wikipedia.org/wiki/Public-key_cryptography<br>
+en.wikipedia.org/wiki/Modular_arithmetic<br>
+Introduction to Cryptography with Coding Theory by Wade Trappe and Lawrence Washington
+</p>
+<hr>
+<div class="hspacer"></div>
+</div>
 </body>
 </html>

@@ -360,21 +360,18 @@ $$
 Satoshi Nakamoto defines a bitcoin as a chain of digital signatures. This chain may be one or more transactions long and is constructed by transferring the bitcoin from one owner to another.
 </p>
 <p>
-What is a transfer in the bitcoin network? Lets say Alice owns a bitcoin which she wants to transfer to Bob. Alice transfers the coin by signing the hash of the previous transaction in which Alice received the bitcoin concatenated with the public key of the next owner Bob. Alice’s digital signature in the transaction proves that she sent Bob the bitcoin and it is this very chain of digital signatures which Nakamoto uses to define a bitcoin. See graphic below of Alice sending Bob a bitcoin transaction.
+What is a transfer in the bitcoin network? Lets say Alice owns a bitcoin which she wants to transfer to Bob. Alice transfers the coin by signing the hash of the previous transaction in which Alice received the bitcoin concatenated with the public key of the next owner, Bob. Alice’s digital signature in the transaction proves that she sent Bob the bitcoin and it is this very chain of digital signatures which Nakamoto uses to define a bitcoin above. See graphic below illustrating Alice sending Bob a bitcoin transaction.
 </p>
 <img src="images/transactions.png"><br>
 <p>
-The next graphic depicts the process of verifying the transaction Alice sent Bob.
+and the following graphic transaction depicts the process of verifying the transaction Alice sent Bob.
 </p>
 <img src="images/trans_verification.png"><br>
 <p>
-The problem with the bitcoin network as outlined so far is that Alice could double spend, taking the same bitcoin she sent to Bob and sending it to Tom. In a centralized electronic currency preventing double spends can be accomplished by a trusted party that verifies all transactions.
+The problem with the bitcoin network as outlined so far is that Alice could double spend, taking the same bitcoin she sent to Bob and sending it to Tom. In a centralized electronic currency preventing double spends can be accomplished by a trusted party that verifies all transactions. To verify transactions without a centralized trusted party verifying transactions, all transactions must be announced publicly and the verification is accomplished by the majority of participants in the bitcoin system agreeing on the networks transaction history. For instance once the network has agreed that Alice has not double spent the bitcoin she sent Bob, the payment is finalized and Bob receives Alice’s bitcoin.
 </p>
 <p>
-For verify transactions without a centralized trusted party verifying transactions, all transactions must be announced publicly and the verification is accomplished by the majority of participants in the bitcoin system agreeing on the networks transaction history. For instance once the network has agreed that Alice has not double spent the bitcoin she sent Bob, the payment is finalized and Bob receives Alice’s bitcoin.
-</p>
-<p>
-Essentially what the bitcoin network is doing in agreeing that a coin has not been previously spent is agreeing the timestamp for when that bitcoin was sent to a payee and that the bitcoin had not been previously spent. In a centralized network one could choose a single node to announce the transaction timestamps. However being a distributed network bitcoin cannot designate a node to announce timestamps. Instead the announcing node is selected randomly. If the random process by which the announcing node is selected is distributed then the network remains distributed. If additionally most nodes in the network agree with the announcement, then the network has also achieved distributed trust.
+Essentially what the bitcoin network is doing in agreeing that a coin has not been previously spent, is agreeing the time stamp for when that bitcoin was sent to a payee and that the bitcoin had not been previously spent by the sender. In a centralized network one could choose a single node to announce the transaction timestamps. However being a distributed network bitcoin cannot designate a node to announce timestamps. Instead the announcing node is selected randomly. If the random process by which the announcing node is selected is distributed then the network remains distributed. If additionally most nodes in the network agree with the announcement, then the network has also achieved distributed trust.
 </p>
 <p>
 Satoshi Nakamoto calls this distributed random process of selecting an announcing node proof-of-work. The idea being that the probability of a node being selected to be an announcing node should be proportional to how invested a node is in the integrity of the bitcoin network or how much work that node has put into maintaining the networks integrity. To measure the work a node has done in maintaining the network each node is asked to present a proof-of-work.
@@ -395,41 +392,36 @@ $$
 $$
 </p>
 <p>
-So if $x=1$ the probability that $hash(m)$ starts with $1$ zero is $\frac{1}{2}$. If $x=2$ the probability that $hash(m)$ starts with two zeros is $\frac{1}{4}$. So it follows that given an $n$ bit hash function and the probability of finding a hash value where the first $x$ digits are zero is $2-x$ where $0 < x \leq n$. In other words every time $x$ increases by $1$, the proof-of-work gets twice as hard. The message $m$ being hashed is the proposed next block in the blockchain. This block contains a hash of the previous block, all of the transactions to be announced and a nonce (a number selected by the node) which is incremented until a hash value of the block with the correct number of leading zeros is found. The difficulty of finding the proof-of-work is periodically adjusted by changing the value of $x$ such that on average a new bitcoin is announced every $10$ minutes or $6$ are announced every hour. <b>(6 blocks en.bitcoin.it/wiki/Block)</b>
+So if $x=1$ the probability that $hash(m)$ starts with $1$ zero is $\frac{1}{2}$. If $x=2$ the probability that $hash(m)$ starts with two zeros is $\frac{1}{4}$. So it follows that given an $n$ bit hash function and the probability of finding a hash value where the first $x$ digits are zero is $2^{-x}$ where $0 < x \leq n$. In other words every time $x$ increases by $1$, the proof-of-work gets twice as hard. The message $m$ being hashed is the proposed next block in the blockchain. This block contains a hash of the previous block, all of the transactions to be announced and a nonce (a number selected by the node). The nonce is incremented until a hash value of the block with the correct number of leading zeros is found. The difficulty of finding the proof-of-work is periodically adjusted by changing the value of $x$ such that on average a new bitcoin is announced every $10$ minutes or $6$ are announced every hour$^1$. 
 </p>
 <p>
-Which node gets to announce the next block is random because it depends on the node finding the correct nonce to produce a proof-of-work before any other node in the network. The probability that a given node produces a proof-of-work before any other node does proportional to the computational power of the node relative to the computational power of the bitcoin network. As producing a proof-of-work before any other node requires finding a nonce producing the x leading zeros before any other node and the faster a node can test nonce’s the more likely this is. 
+The node announcing the next block is random because it is the first node in the network to find the correct nonce to produce a proof-of-work. The probability that a given node produces a proof-of-work before any other node is proportional to the computational power of the node relative to the computational power of all the nodes in the bitcoin network. As producing a proof-of-work before any other node requires finding a nonce producing the x leading zeros before any other node, the faster a node can test a nonce the more likely this is to be the first to produce a proof-of-work. 
 </p>
 <p>
-Once a node has won the right to announce the next block of transactions by completing the proof-of-work, the node announces the new block and the transactions within, to the bitcoin network. 
-</p>
+Once a node has won the right to announce the next block of transactions by being the first to complete the proof-of-work, the node announces the new block and the transactions within, to the bitcoin network. 
 <img src="images/blockchain.png"><br>
-<p>
 Notice that including the hash of the previous block in the new block creates a dependence chain, where the newest block depends on the contents of all previous blocks. This chain of dependence is what constitutes the blockchain.
 </p>
 <p>
-The last block in the blockchain fixes all the value of all previous blocks with the hash of the preceding block. This is important as Nakamoto describes because of the following properties of the bitcoin network.
+The last block in the blockchain fixes the values of all previous blocks with the hash of the preceding block. This is important as Nakamoto describes because of the following properties of the bitcoin network.
 <ol>
-<li>When a node adds a new block to the block chain with a proof-of-work, if all transactions in the block are verified as not being double spends, the new block chain is instantly adopted by the network.</li>
+<li>When a node adds a new block to the blockchain with a proof-of-work, if all transactions in the block are verified as not being double spends, the new block chain is instantly adopted by the network.</li>
 <li>The blockchain helps prevent attackers from being able to modify old transactions such that future double spends will not be detected.</li>
 </ol>
 The first property if hard coded into the network itself. The second arises from the first. To see this consider the following. 
 </p>
 <p>
-Say Alice wants to modify $Block_i$ to $Block'_i$, Alice would have to modify all subsequent blocks $Block_j$ for $j > i$ because the modified blocks hash value the original blocks hash value,
+Say Alice wants to modify $Block_i$ to $Block'_i$, Alice would have to modify all subsequent blocks $Block_j$ for $j > i$ because the modified blocks hash value does not equal the original blocks hash value,
 $$
 hash(Block_i) \neq hash(Block'_i)
 $$
-This changes the contents of all subsequent blocks $Block_j$ for $j > i$ in the blockchain with $Block'_i$. Therefore Alice must find a new nonce for each block $Block_j$ for $j > i$ such that its hash value has $x$ leading zeros.
+This changes the contents of all subsequent blocks $Block_j$ for $j > i$ in the blockchain with the modified block $Block'_i$. Therefore Alice must find a new nonce or proof-of-work for each block $Block_j$ for $j > i$ such that its hash value has $x$ leading zeros.
 </p>
 <p>
-But why doesn’t Alice simply announce that the modified length $i$ blockchain with block $Block'_i$ is the legitimate blockchain? Why does Alice need to redo the proof-of-work for each node following $Block_i$ in the blockchain? Because the legitimate blockchain is defined by the bit chain network as the longest blockchain.
+But why doesn’t Alice simply announce that the modified length $i$ blockchain with block $Block'_i$ is the legitimate blockchain? Why does Alice need to redo the proof-of-work for each node following $Block'_i$ in the blockchain? Because the legitimate blockchain is defined by the bitcoin network as the longest blockchain in the network. If Alice was able to modify block $Block_i$ to $Block'_i$ and construct the proof-of-work for all following blocks in the blockchain plus an additional block such that she was able to announce the longest blockchain her blockchain would be considered the legitimate blockchain by the bitcoin network.
 </p>
 <p>
-If Alice was able to modify block $Block_i$ to $Block'_i$ and construct the proof-of-work for all existing blocks in the blockchain plus an additional block such that she announces the longest blockchain her blockchain would be considered the legitimate blockchain by the bitcoin network.
-</p>
-<p>
-It’s often said that an attacker such as Alice would need to control $51\%$ of the computational power in the bitcoin network in order to get a modified blockchain accepted by the bitcoin network. This is an oversimplification as Nakamoto lays out. Say Alice sends Bob a bitcoin, the bitcoin network waits for the block $Block_i$ containing the transaction sending the bitcoin from Alice to Bob to be $z$ blocks deep in the blockchain. Now define 
+It’s often said that an attacker such as Alice would need to control $51\%$ of the computational power in the bitcoin network in order to get a modified block accepted by the bitcoin network. This is an oversimplification as Nakamoto lays out. Say Alice sends Bob a bitcoin, the bitcoin network waits for the block $Block_i$ containing the transaction sending the bitcoin from Alice to Bob to be $z$ blocks deep in the blockchain. Now define 
 <ul>
 <li>$p =$ the probability that an honest node finds the next block in the blockchain</li>
 <li>$q =$ the probability that Alice finds the next block</li>
@@ -445,12 +437,12 @@ q_z =
 $$
 </li>
 </ul>
-Roughly speaking if Alice controlled 51% of the bitcoin network it would follow that p <= q and therefore Alice would necessarily be successful in her modification of a block. However if p > q it is not insured that Alice will not be successful in her attempt to modify a block.
+Roughly speaking if Alice controlled $51\%$ of the bitcoin network it would follow that $p \leq q$ and therefore Alice will necessarily be successful in her modification of a block of the blockchain. However if $p > q$ it is not insured that Alice will not be successful in her attempt to modify a block.
 </p>
 <p>
-To see this assume Alice has started working on her modified blockchain containing modified block $Block'_i$ as soon $Block_i$ was announced. Also assume Alice’s progress as a Poisson distribution with expected value,
+To see this assume Alice has started working on her modified blockchain containing modified block $Block'_i$ as soon $Block_i$ was announced. Also assume Alice’s progress is a Poisson distribution with expected value,
 $$
-\lambda = z (q/p)
+\lambda = z \left(\frac{q}{p}\right)
 $$
 </p>
 <p>
@@ -459,7 +451,7 @@ $$
 q_z = 1 - \sum_{k=0}^z 
 \left\{
 \begin{align}
-&(q/p)^{(z-k)}		&if k <= z\\
+&(q/p)^{(z-k)}		&if k \leq z\\
 &1			&if k > z
 \end{align}
 \right\}
@@ -467,11 +459,11 @@ $$
 Solving the numerically it turns out that if $q=0.3$,
 $$
 \begin{align}
-&z=5	&implies		\hspace{2em} qz = 0.177\\
-&z=10 	&implies 		\hspace{2em} qz = 0.042
+&z=5	&implies		\hspace{2em} q_z = 0.177\\
+&z=10 	&implies 		\hspace{2em} q_z = 0.042
 \end{align}
 $$
-Or if Alice controls $30\%$ of the bitcoin networks computing power and the modified block is $10$ blocks deep Alice has more than a $4\%$ chance of successfully submitting her modified block $Block'_i$ to the blockchain. To mitigate this possibility the blockchain network considers a transaction unconfirmed until it is $6$ blocks deep, ie $z=6$. <b>(en.bitcoin.it/wiki/Comfirmation)</b>
+Or if Alice controls $30\%$ of the bitcoin networks computing power and the modified block that is $10$ blocks deep, Alice has more than a $4\%$ chance of successfully submitting her modified block $Block'_i$ to the blockchain. To mitigate this possibility the blockchain network considers a transaction unconfirmed until it is $z=6$ blocks deep$^2$. 
 </p>
 <p>
 At this point we have laid the foundation of the bitcoin network and Nakamoto outlines how it operates as follows,
@@ -483,56 +475,44 @@ At this point we have laid the foundation of the bitcoin network and Nakamoto ou
 <li>Nodes accept the block only if all transactions in it are valid and not already spent.</li>
 <li>Nodes express their acceptance of the block by working on creating the next block in the chain using the hash of the accepted block as the previous hash.</li>
 </ol>
-In the off chance that two nodes release new blocks simultaneously such that neither new blockchain permeates the entire network, the blockchain that adds the next block first will be adopted by the network as it will be the longest chain.
 </p>
 <p>
-One of the nice properties of the network outlined above is an inherent fault tolerance. Say for instance a transaction is not received by all nodes in the network. No matter, eventually one of the nodes that received the transaction will incorporate it in a block. Additionally If a node does not receive a broadcasted block it will realize this when it receives the next block and request the missing block. <b>(request it from who????)</b>
+One of the nice properties of the network outlined above is an inherent fault tolerance. In the off chance that two nodes release new blocks simultaneously such that neither new blockchain permeates the entire network, the blockchain that adds the next block first will be adopted by the network as it will be the longest blockchain. Also say for instance a transaction is not received by all nodes in the network. No matter, eventually one of the nodes that received the transaction will incorporate it in a block. Additionally If a node does not receive a broadcasted block it will realize this when it receives the next block and request the missing block. <b>(request it from who????)</b>
 </p>
 <p>
-So far this outline of how the bitcoin network operates leaves a number of issues unaddressed. For instance why would anyone bother to run a full node which verifies bitcoin transactions against a copy of the blockchain and attempts to produce proof-of-work for the next block? 
+So far this outline of how the bitcoin network operates leaves a number of issues unaddressed. For instance why would anyone bother to run a full node which verifies bitcoin transactions against a copy of the blockchain and attempt to produce proof-of-work for the next block? 
 </p>
 <p>
-Most nodes do not validate all transactions on the blockchain as it requires the commitment of substantial resources. Only full nodes often running the software bitcoin-core do validate all transactions against the blockchain. Validating the blockchain and all subsequent blocks if difficult. It requires downloading the around $195GB$ blockchain and it may take up to a week to validate all previous blocks in the blockchain before being able to contribute to the robustness of the bitcoin network by validating unconfirmed transactions. <b>(bitcoin.org/en/full-node)</b> The current number of full bitcoin nodes is disputed but it is somewhere between $10k$ and $100k$. <b>(thenextweb.com/hardfork/2019/05/06/bitcoin-100000-nodes-vunerbale-cryptocurrency)</b>
+Most nodes do not validate all transactions on the blockchain as it requires the commitment of substantial resources. Only full nodes which often run the software bitcoin-core validate all transactions against the blockchain. Validating the blockchain and all subsequent blocks requires downloading the around $195GB$ blockchain. It may then take up to a week to validate all previous blocks in the blockchain before being able to contribute to the robustness of the bitcoin network by validating unconfirmed transactions in new blocks$^3$. The current number of full bitcoin nodes is disputed but it is somewhere between $10k$ and $100k$$^4$. 
 </p>
 <p>
-The startup costs are not the only expenses full nodes face. Verifying transactions and generating proof-of-work costs computation time and electricity. To incentivize the verification of transactions and the production of proof-of-work’s the first transaction a new block is a special transaction that creates a new bitcoin owned by the creator of the block. <b>(How exactly is a new coin created? Does the bitcoin network have a private key that signs the transaction to send the coin to the blocks creator? See def. of a bitcoin)</b>
+The startup costs are not the only expenses full nodes face. Verifying transactions and generating proof-of-work costs computation time and electricity. To incentivize the verification of transactions and the production of proof-of-work’s the first transaction a new block is a special transaction that creates a new bitcoin owned by the creator of the block. <b>(How exactly is a new coin created? Does the bitcoin network have a private key that signs the transaction to send the coin to the blocks creator? See def. of a bitcoin)</b> This new coin transmitted to the node announcing a new block adds incentive for nodes to participate in the network as full nodes and a means of initially distributing coins. An additional incentive is created via transaction fees for each of the transactions to be included in a new block. Once a predetermined number of bitcoins have been released the incentive to verify transactions will be solely transaction fees and bitcoin will be completely inflation free. This has caused some problems as bitcoin transaction fees are often much higher than credit card transaction fees. It’s currently being debated whether this is the cost of decentralization or a design problem.
 </p>
 <p>
-This new coin transmitted to the node announcing a new block adds incentive for nodes to participate in the network as full nodes and a means of initially distributing coins. An additional incentive is created via transaction fees for the transactions to be included in a new block. Once a predetermined number of bitcoins have been released the incentive to verify transactions will be solely transaction fees and bitcoin will be completely inflation free. This has caused some problems as bitcoin transaction fees are often much higher than credit card transaction fees. It’s currently being debated whether this is the cost of decentralization or a design problem.
-</p>
-<p>
-Another issue is that so far we have not addressed transactions consisting of a fraction of a bitcoin. To allow the value of a bitcoin be split and combined each transaction has $1$ or more inputs and at most $2$ outputs. Or formally let $I_j$ be one of $n$ input transactions from Alice to Bob and $O_A$ and $O_B$ be the output to Alice and Bob respectively where $O_A$ returns the change to Alive. Finally let $F \geq 0$ be the transaction fee. Then clearly it must be the case that
+Another issue is that so far we have not addressed is transactions consisting of a fraction of a bitcoin. To allow the value of a bitcoin be split and combined each transaction has $1$ or more inputs and at most $2$ outputs. Or formally let $I_j$ be one of $n$ input transactions from Alice to Bob and $O_A$ and $O_B$ be the output to Alice and Bob respectively where $O_A$ returns the change to Alive. Finally let $F \geq 0$ be the transaction fee. Then clearly it must be the case that
 $$
-\sum_{j=1}^n I_j = O_A + 0_B + F
+\sum_{j=1}^n I_j = O_A + O_B + F
 $$
-</p>
-<p>
 The graphic below depicts the flow of bitcoin during Alice and Bob’s transaction,
 
-<img src="images/trans_example.png"><br>
+<img id="smaller" src="images/trans_example.png"><br>
 
-Now recall that each owner has multiple transactions because each transaction must be signed by the previous bitcoin owner with their private key. Therefore if Bob receives $5$ bitcoins from $5$ different people, these $5$ bitcoins cannot be consolidated into a single transaction worth of $5$ bitcoins without Bob spending an additional transaction fee to carry out a transaction with himself to consolidate his unspent transactions.
+Now recall that each owner has multiple transactions because each transaction must be signed by the previous bitcoin owner with their private key. Therefore if Bob receives $5$ bitcoins from $5$ different people, these $5$ bitcoins cannot be consolidated into a single transaction worth of $5$ bitcoins without Bob spending an additional transaction fee to carry out a transaction with himself to consolidate his unspent transactions. However a bitcoin is not infinitely divisible. The smallest unit of a bitcoin is a satoshi in honor of Satoshi Nakamoto and 1 bitcoin = 100,000,000 satoshi$^5$. 
 </p>
 <p>
-However a bitcoin is not infinitely divisible. The smallest unit of a bitcoin is a satoshi in honor of Satoshi Nakamoto and 1 bitcoin = 100,000,000 satoshi. <b>(bitcoin.org/en/glossery/denominations)</b>
+The final unaddressed issue of the bitcoin network is privacy. Some people say bitcoin is anonymous, others say that bitcoin transactions are necessarily public. Both are correct in a sense. By necessity all transactions are announced publicly on the blockchain to prevent double spending, therefore they cannot be private. But who is sending and receiving the transactions may remain anonymous if the transactions public keys cannot be tied to a real world identity. Recall for Alice to create the transaction, Bob’s public key must be known. Additionally for any node in the bitcoin network to verify the transaction the public keys of Alice and Bob must be known. But the identities of Alice and Bob themselves need not be known. In this sense bitcoin is private. However one can still be identified as the owner of a number of transactions if the same public private key pair are used for each transaction and the transacting individual has not tumbled their bitcoins.  <b>(Explain bitcoin tumbling)</b>
 </p>
 <p>
-The final unaddressed issue of the bitcoin network is privacy. Some people say bitcoin is anonymous, others say that bitcoin transactions are necessarily public. Both are correct in a sense. By necessity all transactions are announced publicly on the blockchain to prevent double spending, therefore they cannot be private. But who is sending and receiving the transactions may remain anonymous if the transactions public keys cannot be tied to an identity.
-</p>
-<p>
-Recall for Alice to create the transaction, Bob’s public key must be known. Additionally for any node in the bitcoin network to verify the transaction the public keys of Alice and Bob must be known. But the identities of Alice and Bob themselves need not be known. In this sense bitcoin is private. However one can still be identified as the owner of a number of transactions if the same public private key pair are used for each transaction and the transacting individual has not tumbled their bitcoins.  <b>(Explain bitcoin tumbling)</b>
-</p>
-<p>
-For instance if Alice was paying Bob for drugs and their transaction and Alice was actually a federal agent, then the feds would know that Bob sold drugs. But additionally if Bob used the same public private key pair to buy federal bonds with his bitcoin, then the feds would know that the same individual who sold Alice drugs was investing in federal bonds. This is not the only privacy problem with bitcoin, just one of the clearest. Generally it's best to assume that bitcoin transactions are not private.
+For instance if Alice was paying Bob for drugs with there bitcoin transaction and Alice was actually a federal agent, then the feds would know that whoever owned Bob's public key sold drugs. But additionally if Bob used the same public private key pair to buy federal bonds with his bitcoin, then the feds would know that the same individual who sold Alice drugs was buying federal bonds and it would be relatively easy for the feds to figure out real world "Bob" was behind both transactions. This is not the only privacy problem with bitcoin, just one of the clearest. Generally it's best to assume that bitcoin transactions are not private.
 </p>
 <p>
 <b>Sources:</b><br>
+$^{(1)}$ <a href="https://en.bitcoin.it/wiki/Block">en.bitcoin.it/wiki/Block</a><br>
+$^{(2)}$<a href="https://en.bitcoin.it/wiki/Comfirmation">en.bitcoin.it/wiki/Comfirmation</a><br>
+$^{(3)}$<a href="https://bitcoin.org/en/full-node">bitcoin.org/en/full-node</a><br> 
+$^{(4)}$<a href="https://thenextweb.com/hardfork/2019/05/06/bitcoin-100000-nodes-vunerbale-cryptocurrency">thenextweb.com/hardfork/2019/05/06/bitcoin-100000-nodes-vunerbale-cryptocurrency</a><br>
+$^{(5)}$<a href="https://bitcoin.org/en/glossery/denominations">bitcoin.org/en/glossery/denominations</a><br>
 “Bitcoin: A Peer-to-Peer electronic Cash System” by Satoshi Nakamoto<br>
-en.bitcoin.it/wiki/Block<br>
-bitcoin.org/en/full-node<br>
-en.bitcoin.it/wiki/Comfirmation<br>
-bitcoin.org/en/glossery/denominations<br>
-thenextweb.com/hardfork/2019/05/06/bitcoin-100000-nodes-vunerbale-cryptocurrency<br>
 </p>
 <hr>
 <div class="hspacer"></div>

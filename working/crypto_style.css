@@ -12,6 +12,15 @@ div.hspacer {
 	width: 50%;
 }
 
+img#smaller {
+	display: block;
+	width: 50%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 h1 {
 	margin-bottom: -16px;
 }
@@ -31,9 +40,12 @@ hr {
 }
 
 img {
-	width: 100%;
+	display: block;
+	width: 80%;
 	margin-top: 20px;
 	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 li {

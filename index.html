@@ -19,10 +19,10 @@ MathJax = {
 <h1>Crypto Notes</h1>
 <hr>
 <p>
-The goal of these notes is to serve as a record of my own understanding of crypto currencies and related concepts. I find writing formal notes forces me to confront gaps in my understanding. Also I personally do not invest in crypto currencies as I cannot afford to lose the money and I do not suggest that anyone else should except for educational purposes. What interests me about crypto currencies is not so much their value but their relative success as persistent distributed applications. These notes no doubt reflect this interest.
+The goal of these notes is to serve as a record of my own understanding of crypto currencies and related concepts. I find writing formal notes forces me to confront gaps in my understanding. I personally do not invest in crypto currencies as I cannot afford to lose the money nor I do not suggest that anyone else should invest in crypto currencies except for educational purposes. What interests me about crypto currencies is not so much their value as their relative success as persistent distributed applications. These notes no doubt reflect this interest.
 </p>
 <p>
-I had also hoped that GitHub Pages had some great whizzbang plug and play templates which would make my notes look pro! Not so much, so bear with me as I refine there presentation.
+I had hoped that GitHub Pages had some great whizzbang plug and play templates which would make my notes look pro! Not so much, so bear with me as I refine their presentation.
 </p>
 
 <h2>Preliminary Concepts</h2>
@@ -31,12 +31,11 @@ I had also hoped that GitHub Pages had some great whizzbang plug and play templa
 <h3>Hash Function</h3>
 A hash function is a function that,
 <ol>
-	<li>Maps a message m of arbitrary size to a fixed size hash value, $hash(m)$.</li>
-	<li>Scrambles the information in m such that the hash functions hash value is uniformly distributed across its possible values.</li>
+	<li>Maps a message $m$ of arbitrary size to a fixed size hash value, $hash(m)$.</li>
+	<li>Scrambles the information in $m$ such that the hash functions hash value is uniformly distributed across its possible values.</li>
 	<li>Is fast to compute.</li>
 	<li>Is deterministic.</li>
 </ol>
-
 Notice that 2. leads to a corollary,
 <ul>
 <li>A hash function minimizes the probability that two distinct messages $m_1$ and $m_2$ have the same hash value. Which can be formally expressed as minimizing the probability that,
@@ -46,13 +45,13 @@ $$
 </li>
 </ul>
 
-This is a corollary of 2. because 2. states that hash(m) for any message m is uniformly distributed over all possible hash values. Additionally it is called a hash collision if it is true that $m_1 \neq m_2$ and $hash(m_1) = hash(m_2)$.
+This is a corollary of 2. because 2. states that hash(m) for any message $m$ is uniformly distributed over all possible hash values. Additionally it is called a hash collision if it is true that $m_1 \neq m_2$ and $hash(m_1) = hash(m_2)$.
 </p>
 <p>
 An example of a simple hash function is,<br>
 <img src="images/hash_func.png"><br>
 
-Assuming the input message is a string of alphabetic characters this simple hash function outputs an integer between 0 and 4. So if we input messages ALICE and BOB into this hash function we get hashes 0 and 4 as shown in the table below.
+Assuming the input message is a string of alphabetic characters this simple hash function outputs an integer between 0 and 4. So if we input messages ALICE and BOB into this hash function we get hashes 0 and 4 respectively as shown in the table below.
 </p>
 <table style="width:100%">
 	<tr class="col_label">
@@ -137,8 +136,11 @@ Assuming the input message is a string of alphabetic characters this simple hash
   	</tr>
 </table>
 <p>
-<b>Notation:</b> (+) denotes addition, mod denotes the modulo operation<br>
-<b>Source:</b> en.wikipedia.org/wiki/Hash_function
+<b>Notation:</b><br> 
+$(+)$ denotes addition<br>
+$mod$ denotes the modulo operation<br><br>
+<b>Sources:</b><br> 
+<a href="https://en.wikipedia.org/wiki/Hash_function">en.wikipedia.org/wiki/Hash_function</a>
 </p>
 <hr>
 
@@ -146,10 +148,7 @@ Assuming the input message is a string of alphabetic characters this simple hash
 <div class="hspacer"></div>
 <p>
 <h3>Cryptographic Hash Function</h3>
-The fundamental difference between a hash function and a cryptographic hash function is that it is practically impossible to invert a cryptographic hash function, which is a one-way function. In life there are many one-way functions. For instance it is easy to light a match, but once lit it is practically impossible to return it to its initial state.
-</p>
-<p>
-In the example hash function above, the inability to invert it would imply that given the hash value $0$ it is impossible to guess that it was derived from the message ALICE. This is clearly not true which is why the hash function above is not a cryptographic hash function.
+The fundamental difference between a hash function and a cryptographic hash function is that it is practically impossible to invert a cryptographic hash function. This is because in addition to being a hash function a cryptographic hash function is a one-way function. In life there are many one-way functions. For instance it is easy to light a match, but once lit it is practically impossible to return it to its initial state. In the example of a hash function above, the inability to invert it would imply that given the hash value $0$ it is practically impossible to guess that it was derived from the message ALICE. This is clearly not true which is why the hash function above is not a cryptographic hash function.
 </p>
 Getting more technical a cryptographic hash function should satisfy the following properties.
 <ul>
@@ -176,7 +175,8 @@ $$
 </li>
 </ul>
 <p>
-<b>Source:</b> en.wikipedia.org/wiki/Cryptographic_hash_function
+<b>Sources:</b><br> 
+<a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">en.wikipedia.org/wiki/Cryptographic_hash_function</a>
 </p>
 <hr>
 
@@ -184,7 +184,7 @@ $$
 <div class="hspacer"></div>
 <p>
 <h3>Symmetric-Key Cryptography</h3>
-To motivate public-key cryptography I’m going to introduce symmetric key cryptography. In symmetric key cryptography the same secret key is used to both encode and decode a message. One of the simplest symmetric key ciphers is the Caesar shift cipher. Given a message text m and secret key $k$, the message with spaces removed and letters replaced by the integers $1$ through $26$ is encoded as
+To motivate public-key cryptography I’m going to introduce symmetric key cryptography. In symmetric key cryptography the same secret key is used to both encode and decode a message. One of the simplest symmetric key ciphers is the Caesar shift cipher. Given a message text $m$ and secret key $k$, the message with spaces removed and letters replaced by the integers $1$ through $26$ is encoded one letter at a time as
 $$
 c = (m+k)~mod~26
 $$
@@ -206,32 +206,33 @@ using a Caesar shift cipher and the shared secret key $k=1$. The corresponding e
 $$
 cfxbsfpgcsvuvt
 $$
-as each character in the message is replaced by the character $1$ space to its left in the alphabet and wrapping around at ‘z’.  Bob knowing $k=1$ can then decode this ciphertext by replacing each character with the character one space to its right and wrapping around at ‘a’.
+as each character in the message is replaced by the character $1$ space to its left in the alphabet, wrapping around at ‘z’.  Bob knowing $k=1$ can then decode this ciphertext by replacing each character with the character $1$ space to its right, wrapping around at ‘a’.
 </p>
 <p>
-The Caesar shift cipher is a very simple encryption scheme. Practical symmetric cryptography schemes like Advanced Standard Encryption (AES) are much more complicated. But the key takeaway is for Alice and Bob to communicate in a symmetric cryptography scheme they must share a secret key.
+The Caesar shift cipher is a very simple encryption scheme. Practical symmetric cryptography schemes like Advanced Standard Encryption (AES) are much more complicated. But the key takeaway is that for Alice and Bob to communicate via a symmetric cryptography scheme they must share a secret key.
 </p>
 <p>
-Now let's say Alice and Bob have a friend Tom. If Alice wants to communicate privately with Bob they must share a secret key $k_{AB}$ and if Alice wants to communicate privately with Bob they must share a secret key $k_{AT}$. Finally if Bob wants to communicate privately with Tom they must share a secret key $k_{BT}$. This in only three secret keys but say there are $n$ people who want to communicate then under a symmetric cryptography scheme each user would have to have $n-1$ unique secret keys and in the entire cryptography scheme would have to generate and maintain,
+Now let's say Alice and Bob have a friend Tom. If Alice wants to communicate privately with Bob they must share a secret key $k_{AB}$ and if Alice wants to communicate privately with Tom they must share a secret key $k_{AT}$. Finally if Bob wants to communicate privately with Tom they must share a secret key $k_{BT}$. This is only three secret keys but say there are $n$ people who want to communicate then under a symmetric cryptography scheme each user would have to have $n-1$ unique secret keys and the entire cryptography scheme would have to generate and maintain,
 $$
 \frac{n (n-1)}{2}
 $$
 secret keys. So if $n$ is earth’s population which is about $7.5 \times 10^9$ that works out to about $2.8 \times 10^{19}$ secret keys, which becomes a challenge to generate and maintain.
 </p>
 <p>
-Of course most people don’t communicate with every other person on earth. So why is it necessary to generate all n (n-1) / 2 keys? The short answer is that it is not necessary thanks to public-key cryptography. But let’s give an example where it might otherwise be necessary to generate all these keys.
+Of course most people don’t communicate with every other person on earth. So why is it necessary to generate all $\frac{n (n-1)}{2}$ keys? The short answer is that it is not necessary thanks to public-key cryptography. But let’s give an example where it might otherwise be necessary to generate all these keys.
 </p>
 <p>
 Say Alice, Bob, and Tom want to communicate privately with one another. How do they distribute keys $k_{AB}$, $k_{AT}$, and $k_{BT}$? Perhaps Alice chooses $k_{AB}$ and $k_{AT}$ and gives them to Bob and Tom in super secret meet ups. But clearly if Alice wants to communicate with $n$ people, meeting all of them in person to give them a secret key is not practical. So instead Alice mails Bob and Tom their secret keys, eliminating the need for super secret meet ups. But Tom is curious about Alice’s private communications with Bob, so Tom intercepts the letter and copies the secret key $k_{AB}$ before forwarding it to Bob. Tom is then able to read all of Alice and Bob’s communications without either of them knowing that he is doing so. This of course undermines the entire reason for setting up a cryptographic communication scheme in the first place.
 </p>
 <p>
-So instead say Alice, Bob, and Tom appeal to a trusted party, Server. Server generates all the secret keys and is always available for super secret meet ups to hand them off in person. The first problem with this distribution scheme is that in the worst case Server will have to generate and maintain $\frac{n(n-1)}{2}$ keys to make sure that he doesn’t accidentally distribute a key to more than one pair of users. The second problem is can Alice, Bob, and Tom really trust Server? Server can read everyone's messages. Again this seems to undermine the entire reason for using a cryptographic communication scheme.
+So instead say Alice, Bob, and Tom appeal to a trusted party, Server. Server generates all the secret keys and is always available for super secret meet ups to hand off the keys. The first problem with this distribution scheme is that in the worst case Server will have to generate and maintain $\frac{n(n-1)}{2}$ keys to make sure that he doesn’t accidentally distribute a key to more than one pair of users. The second problem is can Alice, Bob, and Tom really trust Server? Server can read everyone's messages. Again this seems to undermine the entire reason for using a cryptographic communication scheme.
 </p>
 <p>
-Public-key cryptography while much more computationally intensive than symmetric key cryptography avoids the problem of exchanging secret keys entirely. In fact public-key cryptographic schemes are often used to set up secure communication channels via which individuals initially exchange secret keys for symmetric key cryptography schemes.
+Public-key cryptography while much more computationally intensive than symmetric key cryptography avoids the problem of distributing secret keys entirely. In fact public-key cryptographic schemes are often used to set up secure communication channels via which individuals initially exchange secret keys for symmetric key cryptography schemes.
 </p>
 <p>
-<b>Sources:</b> en.wikipedia.org/wiki/Caesar_cipher
+<b>Sources:</b><br> 
+<a href="https://en.wikipedia.org/wiki/Caesar_cipher">en.wikipedia.org/wiki/Caesar_cipher</a>
 </p>
 <hr>
 
@@ -249,10 +250,10 @@ m = decrypt(c,k_{b,pri})
 $$
 </p>
 <p>
-An elegant solution to the problem of key distribution. Why did it take until the 1970s for James H. Ellis to discover public-key cryptography when symmetric key cryptography has been around for thousands of years? Well it turns out that choosing the right public and private key pairs and the right encryption and decryption algorithms of that if an attacker known $k_{pub}$, $encrypt(*)$, $decrypt(*)$, and ciphertext $c$, they cannot easily guess $k_{pri}$ or message m is non-trivial.
+An elegant solution to the problem of key distribution. Why did it take until the 1970s for James H. Ellis to discover public-key cryptography when symmetric key cryptography has been around for thousands of years? Well it turns out that choosing the right public and private key pairs and the right encryption and decryption algorithms so that if an attacker knowns $k_{pub}$, $encrypt(*)$, $decrypt(*)$, and ciphertext $c$, they cannot easily guess private key $k_{pri}$ or message $m$ is non-trivial.
 </p>
 <p>
-To see this I will explain how Rivest–Shamir–Adleman (RSA) public-key cryptosystem works. But first let’s introduce the modular congruence.  Modular congruence is a relation denoted as
+To see this I will explain how the Rivest–Shamir–Adleman (RSA) public-key cryptosystem works. But first let’s introduce the modular congruence.  Modular congruence is a relation denoted as
 $$
 a \equiv b~(mod~n)
 $$
@@ -287,7 +288,7 @@ $$
 <p>
 To understand why the $m$ is congruent with $m^{ed}~(mod~n)$ requires understanding how $n$, $e$, and $d$ are selected. Trappe summarized this selection processes as follows
 <ol>
-<li>Choose secret primes $p$ and $q$ and computes $n = pq$.</li>
+<li>Choose secret primes $p$ and $q$ and compute $n = pq$.</li>
 <li>Choose $e$ with $gcd(e,(p-1)(q-1)) = 1$.</li>
 <li>Compute $d$ such that $de ≡ 1~(mod~(p-1)(q-1))$.</li>
 </ol>
@@ -295,12 +296,12 @@ To understand why the $m$ is congruent with $m^{ed}~(mod~n)$ requires understand
 <p>
 Now although it can be shown to be unnecessary, assume $gcd(m,n) = 1$. Then Euler’s Theorem gives
 $$
-m\phi(n) \equiv 1~(mod~n)
+m^{\phi(n)} \equiv 1~(mod~n)
 $$
-where $\phi(n)$ Euler totient function and given $n = pq$ it follows that $\phi(n) = (p-1)(q-1)$.
+where $\phi(n)$ is the Euler totient function and given $n = pq$ it follows that $\phi(n) = (p-1)(q-1)$.
 </p>
 <p>
-Now recall we also selected $d$ such that $d^e ≡ 1~(mod~(p-1)(q-1))$. Therefore it follows that $d^e = 1 + k\phi(n)$ for some integer $k$ and,
+Now recall we also selected $d$ such that $de ≡ 1~(mod~(p-1)(q-1))$. Therefore it follows that $de = 1 + k\phi(n)$ for some integer $k$ and,
 $$
 \begin{align}
 c^d &\equiv (m^e)^d~(mod~n)\\
@@ -312,17 +313,18 @@ c^d &\equiv (m^e)^d~(mod~n)\\
 $$
 </p>
 <p>
-Now why is RSA secure? First it is hard to guess the message $m$ given ciphertext $m^e$. Second given $e$ and $n$ its hard to compute $d$ because $n$ is hard to factor into $p$ and $q$. Where by hard we mean there is no known algorithm that can factor a $b$-bit number in $O(bk)$ time or less for some constant $k$.
+Now why is RSA secure? First it is hard to guess the message $m$ given ciphertext $c=m^e$. Second given $e$ and $n$ its hard to compute $d$ because $n$ is hard to factor into $p$ and $q$. Where by hard we mean there is no known algorithm that can factor all $b$-bit integers in $O(b^k)$ time or less for some constant $k$.
 </p>
 <p>
+<b>Notation:</b><br> 
+$O(*)$ is Big $O$ notation<br><br>
 <b>Sources:</b><br> 
-en.wikipedia.org/wiki/Public-key_cryptography<br>
-en.wikipedia.org/wiki/Modular_arithmetic<br>
-en.wikipedia.org/wiki/RSA_(cryptosystem)<br>
-en.wikipedia.org/wiki/Integer_factorization<br>
-en.wikipedia.org/wiki/Big_O_notation<br>
-Introduction to Cryptography with Coding Theory by Wade Trappe and Lawrence Washington<br>
-<b>Notation:</b> $O(*)$ is Big O notation
+<a href="https://en.wikipedia.org/wiki/Public-key_cryptography">en.wikipedia.org/wiki/Public-key_cryptography</a><br>
+<a href="https://en.wikipedia.org/wiki/Modular_arithmetic">en.wikipedia.org/wiki/Modular_arithmetic</a><br>
+<a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">en.wikipedia.org/wiki/RSA_(cryptosystem)</a><br>
+<a href="https://en.wikipedia.org/wiki/Integer_factorization">en.wikipedia.org/wiki/Integer_factorization</a><br>
+<a href="https://en.wikipedia.org/wiki/Big_O_notation">en.wikipedia.org/wiki/Big_O_notation</a><br>
+<u>Introduction to Cryptography with Coding Theory</u> by Wade Trappe and Lawrence Washington
 </p>
 <hr>
 
@@ -330,13 +332,13 @@ Introduction to Cryptography with Coding Theory by Wade Trappe and Lawrence Wash
 <p>
 <h3>Digital Signatures</h3>
 <p>
-Once you understand the concepts of public-key cryptography digital signatures are pretty straight forward. Say Alice wants to send Bob a message m and she doesn’t care who reads it she just wants Bob to know it was from her. Then she would sign the message with her private key d. Anyone with Alice’s public key $(e,n)$ could of course recover the message but they would also know that only Alice had the secret d with which the message was signed therefore it must be from her. Under the RSA cryptosystem this digital signature has the form,
+Once you understand the concepts of public-key cryptography digital signatures are pretty straight forward. Say Alice wants to send Bob a message $m$ and she doesn’t care who reads it, she just wants Bob to know it was from her. Then she would sign the message with her private key $d$. Anyone with Alice’s public key $(e,n)$ could of course recover the message but they would also know that only Alice had the secret $d$ with which the message was signed, therefore it must be from her. Under the RSA cryptosystem this digital signature has the form,
 $$
 m_{signed} = m^d
 $$
 </p>
 <p>
-Signature verification is the same procedure as public key encryption.
+Signature verification is the same procedure as public-key encryption.
 $$
 (m_{signed})^e \equiv (m^d)^e~(mod~n)\\
 \equiv m^{ed}~(mod~n)\\
@@ -345,12 +347,13 @@ $$
 </p>
 <p>
 <b>Sources:</b><br>
-en.wikipedia.org/wiki/Public-key_cryptography<br>
-en.wikipedia.org/wiki/Modular_arithmetic<br>
-Introduction to Cryptography with Coding Theory by Wade Trappe and Lawrence Washington
+<a href="https://en.wikipedia.org/wiki/Public-key_cryptography">en.wikipedia.org/wiki/Public-key_cryptography</a><br>
+<a href="https://en.wikipedia.org/wiki/Modular_arithmetic">en.wikipedia.org/wiki/Modular_arithmetic</a><br>
+<u>Introduction to Cryptography with Coding Theory</u> by Wade Trappe and Lawrence Washington
 </p>
 <hr>
 <div class="hspacer"></div>
+
 
 <h2>Bitcoin and Blockchain</h2>
 <hr>

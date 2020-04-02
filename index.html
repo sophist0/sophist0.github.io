@@ -1,182 +1,93 @@
 <!DOCTYPE html>
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-
-	<link rel="stylesheet" type="text/css" href="index_style.css">
-
+<html>
+<head>
+<title>Overview</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
-<body class="body_1" id="page_body">
-
-	<div class="sblock2"></div>
-	<div class="sblock3"><br></div>
-
-        <div class="box_static" id="main_box">
-
-                <div class="bar" id="main_bar"></div>
-		<div class="sblock4"></div>
-		<div class="nblock">Jonathan Stokes</div>
-		<div class="eblock">stokesj84 at gmail dot com</div>
-		<div class="sblock4"></div>
-                <div class="bar" id="main_bar"></div>
-
-
- 		<div class="sblock"></div>
-		<div class="wraptitle">
-                <div class="square1"></div>
-                <div class="square2"></div>
-                <div class="tblock">Research Overview</div>
-		</div>		
-
-                <div class="sblock"></div>
-		<div class="cblock">
-		<p>
-		My PhD research developed estimates of the cost of using various algorithms to find high degree nodes in large graphs. This research is related to the problem of finding influential people in a social network or a particular file in a peer-to-peer network. A network is an example of a graph where the graph's nodes are the intersections of the network's links or edges and a high degree node is a large intersection of edges. A graph is a mathematical object just as a matrix is a mathematical object. In small graphs the problem of finding high degree nodes in a graph has a straightforward solution, count the edges connected to each node. In a graph with billions or trillions of nodes, however, the time required to examine each node may be cost prohibitive. 
-		</p>
-		<p>
-		How should one then approach this problem? One option is to sample or search a small portion of the graph and return the highest degree nodes found. This may not return the highest degree nodes in the graph, but if we cannot search the entire graph it may be the best we can do. 
-		</p>
-		<p>
-		This leads to the question, given a graph sampling algorithm X how much of the graph should X sample? How much of the graph should we sample with X before we might expect to find the highest degree node in the graph? Graphs are complex objects with many properties including, number of nodes, number of edges, degree distribution, degree assortativity, etc. The size of the graph sample required for X to find the highest degree nodes likely depends on these graph properties. But these properties of the graph may themselves be unknownable without first examining the entire graph. 
-		</p>
-		<p>
-		So, we have an intractable problem? If the problem is stated in this form, yes. However, say we add restrictions to the class of graphs we are considering. Say we only consider Erdos Renyi (ER) graphs where given N nodes, edges are placed between each node n_i and every other node n_j for i not equal j with probability p. Given an ER graph with N nodes and p edge probability many of the expected properties of the graph can be calculated. For instance, the graph has about N*(N-1)*p/2 edges, a binomial degree distribution, and zero degree assortativity.
-		</p>
-		<p>
-		My research estimated the average number of steps or samples required for two kinds of algorithms to find the highest degree nodes in an ER graph. The number of samples is another metric for the computational cost or how large a sample of the graph it is expected that algorithm X will have to take to find a graphs highest degree nodes. I looked at two classes of graph search algorithms: random walk, and star sampling, the latter being a form of random sampling. I contributed to the state of the art by developing estimates of the expected number of samples required to find the maximum degree node in an ER graph given only parameters N and p for instances of random walk and star sampling algorithms.
-		</p>		
-		</div>
-     
-
- 
-		<div class="sblock"></div>
-		<div class="wraptitle">
-                <div class="square1"></div>
-                <div class="square2"></div>
-                <div class="tblock">Professional Interests</div>
-		</div>		
-
-                <div class="sblock"></div>
-		<div class="cblock">
-			AI,
-			Blockchain,
-			Cryptography,
-			Data Science,
-			Graph Sampling, 
-			Graph Theory,
- 			Information Theory,
-			Machine Learning, 
-			Optimization, 
-			Signal Processing
-		</div>
-
-
-                <div class="sblock"></div>
-		<div class="wraptitle">
-                <div class="square1"></div>
-                <div class="square2"></div>
-                <div class="tblock">Education</div><br><br>
-		</div>
-
-                <div class="sblock"></div>
-		<div class="cblock">
-			Drexel, PhD. in Electrical Engineering 2018<br><br>
-			Drexel, MS in Electrical Engineering 2015<br><br>
-			URI, BS in Electrical Engineering 2012<br><br>
-			Reed College, BA in Philosophy 2007
- 		</div>
-
-                <div class="sblock"></div>
-		<div class="wraptitle">
-                <div class="square1"></div>
-                <div class="square2"></div>
-                <div class="tblock">Published Papers</div><br><br>
-		</div>
-
-                <div class="sblock"></div>
-		<div class="cblock">
-
-                        <b class="subtitle">Conference Papers</b><br>
-
-                        <a href="http://dx.doi.org/10.1109/CISS.2016.7460544">A Markov chain model for the search time for max degree nodes in a graph using a biased random walk - Stokes and Weber (CISS 2016)</a><br><br>
-
-                        <a href="http://dx.doi.org/10.1109/GLOCOM.2016.7842044">On random walks and random sampling to find max degree nodes in assortative Erdos Renyi graphs - Stokes and Weber (Globecom 2016)</a>
-			<br><br>
-
-			<a href="http://dx.doi.org/10.1109/BigData.2016.7840599">The self-avoiding walk-jump (SAWJ) algorithm for finding maximum degree nodes in large graphs - Stokes and Weber (Big Data 2016)</a>
-                        <br><br>
-
-			<a href="http://dx.doi.org/10.1109/CISS.2017.7926120">On the number of star samples to find a vertex or edge with given degree in a graph - Stokes and Weber (CISS 2017)</a>
-			<br><br>
-
-                        <a href="http://dx.doi.org/10.1109/CISS.2018.8362198">Online estimation for finding a near-maximum value in a large list of numerical data - Stokes and Weber (CISS 2018)</a>
-                        <br><br>
-
-                        <b class="subtitle">Workshop Papers</b><br> 
-
-			<a href="http://www.mlgworkshop.org/2017/paper/MLG2017_paper_8.pdf">Star sampling with and without replacement - Stokes and Weber (KDD Workshop 2017)</a>
-			<br><br>
-
-                        <b class="subtitle">Journal Letters and Papers</b><br> 
-
-			<a href="https://www.sciencedirect.com/science/article/pii/S0020019018301509">Common greedy wiring and rewiring heuristics do not guarantee maximum assortative graphs of given degree - Stokes and Weber (IPL 2018)</a>
-			<br><br>
-
-			<a href="https://arxiv.org/abs/1901.03393">Star sampling with and without replacement - Stokes and Weber (submitted to TNSE 2019)</a>
-			<br><br>
-
-                        <b class="subtitle">Thesis</b><br> 
-
-				<!-- <a href="https://sophist0.github.io/files/jonathan_stokes_thesis.pdf">Performance of random walks and sampling for graph search (2018)</a> --!>
-				<a href="files/jonathan_stokes_thesis.pdf">Performance of random walks and sampling for graph search (2018)</a>
-
-				<br><br>
- 		</div>
-             
-                <div class="sblock"></div>
-		<div class="wraptitle">
-                <div class="square1"></div>
-                <div class="square2"></div>
-                <div class="tblock">Code</div>
-		</div>
-			
-                <div class="sblock"></div>
-		<div class="cblock">
-			<a href="https://github.com/sophist0">Some of my code is on Github.</a>
-		</div>
-
-
-                <div class="sblock"></div>
-		<div class="wraptitle">
-                <div class="square1"></div>
-                <div class="square2"></div>
-                <div class="tblock">Resume</div>
-		</div>
-
-                <div class="sblock"></div>
-		<div class="cblock">
-			<!-- <a href="https://sophist0.github.io/files/resume_122019.pdf">My resume</a> --!>
-			<a href="files/resume_042020.pdf">My resume</a>
-		</div>     
-    
-
-                <div class="sblock"></div>
-		<div class="wraptitle">
-                <div class="square1"></div>
-                <div class="square2"></div>
-                <div class="tblock">Some Notes</div>
-		</div>
-
-                <div class="sblock"></div>
-		<div class="cblock">
-			<a href="crypto_notes.html">Bitcoin Notes</a>
-		</div>     
-
-
-                <div class="sblock"></div>
-                <div class="bar" id="main_bar"></div>
-
-        </div>
-	<div class="sblock2"></div>
-
-
-
-</body></html>
+<body>
+<div class="hspacer"></div>
+<div class="content_block">
+<div class="title_block">
+<div id="name_block"><h1>Jonathan Stokes</h1></div>
+<div id="email_block">stokesj84 at gmail dot com</div><br>
+</div>
+<div class="clear_block"></div>
+<div class="hspacer"></div>
+<h2>Research Overview</h2>
+<hr>
+<p>
+My PhD research developed estimates of the cost of using various algorithms to find high degree nodes in large graphs. This research is related to the problem of finding influential people in a social network or a particular file in a peer-to-peer network. A network is an example of a graph where the graph's nodes are the intersections of the network's links or edges and a high degree node is a large intersection of edges. A graph is a mathematical object just as a matrix is a mathematical object. In small graphs the problem of finding high degree nodes in a graph has a straightforward solution, count the edges connected to each node. In a graph with billions or trillions of nodes, however, the time required to examine each node may be cost prohibitive. 
+</p>
+<p>
+How should one then approach this problem? One option is to sample or search a small portion of the graph and return the highest degree nodes found. This may not return the highest degree nodes in the graph, but if we cannot search the entire graph it may be the best we can do. 
+</p>
+<p>
+This leads to the question, given a graph sampling algorithm $X$ how much of the graph should $X$ sample? How much of the graph should we sample with $X$ before we might expect to find the highest degree node in the graph? Graphs are complex objects with many properties including, number of nodes, number of edges, degree distribution, degree assortativity, etc. The size of the graph sample required for $X$ to find the highest degree nodes likely depends on these graph properties. But these properties of the graph may themselves be unknowable without first examining the entire graph. 
+</p>
+<p>
+So, we have an intractable problem? If the problem is stated in this form, yes. However, say we add restrictions to the class of graphs we are considering. Say we only consider Erdos Renyi (ER) graphs where given $N$ nodes, edges are placed between each node $n_i$ and every other node $n_j$ for $i$ not equal $j$ with probability $p$. Given an ER graph with $N$ nodes and $p$ edge probability many of the expected properties of the graph can be calculated. For instance, the graph has about $N(N-1)\frac{p}{2}$ edges, a binomial degree distribution, and zero degree assortativity.
+</p>
+<p>
+My research estimated the average number of steps or samples required for two kinds of algorithms to find the highest degree nodes in an ER graph. The number of samples is another metric for the computational cost or how large a sample of the graph it is expected that algorithm $X$ will have to take to find a graphs highest degree nodes. I looked at two classes of graph search algorithms: random walk, and star sampling, the latter being a form of random sampling. I contributed to the state of the art by developing estimates of the expected number of samples required to find the maximum degree node in an ER graph given only parameters $N$ and $p$ for instances of random walk and star sampling algorithms.
+</p>		
+<div class="hspacer"></div>
+<h2>Professional Interests</h2>
+<hr>
+<p>
+I have varying levels of expertise in the following, this is more of a list of fields I think would be interesting to work in or learn more about: Artificial Intelligence, Blockchain, Cryptography, Data Science, Graph Sampling, Graph Theory, Information Theory, Machine Learning, Optimization, Signal Processing.
+</p>
+<div class="hspacer"></div>
+<h2>Education</h2>
+<hr>
+<p>
+Drexel, PhD. in Electrical Engineering 2018<br><br>
+Drexel, MS in Electrical Engineering 2015<br><br>
+University of Rhode Island, BS in Electrical Engineering 2012<br><br>
+Reed College, BA in Philosophy 2007
+</p>
+<div class="hspacer"></div>
+<h2>Academic Papers</h2>
+<hr>
+<h3>Conference Papers</h3>
+<a href="http://dx.doi.org/10.1109/CISS.2016.7460544">A Markov chain model for the search time for max degree nodes in a graph using a biased random walk - Stokes and Weber (CISS 2016)</a>
+<br><br>
+<a href="http://dx.doi.org/10.1109/GLOCOM.2016.7842044">On random walks and random sampling to find max degree nodes in assortative Erdos Renyi graphs - Stokes and Weber (Globecom 2016)</a>
+<br><br>
+<a href="http://dx.doi.org/10.1109/BigData.2016.7840599">The self-avoiding walk-jump (SAWJ) algorithm for finding maximum degree nodes in large graphs - Stokes and Weber (Big Data 2016)</a>
+<br><br>
+<a href="http://dx.doi.org/10.1109/CISS.2017.7926120">On the number of star samples to find a vertex or edge with given degree in a graph - Stokes and Weber (CISS 2017)</a>
+<br><br>
+<a href="http://dx.doi.org/10.1109/CISS.2018.8362198">Online estimation for finding a near-maximum value in a large list of numerical data - Stokes and Weber (CISS 2018)</a>
+<br><br>
+<h3>Workshop Papers</h3>
+<a href="http://www.mlgworkshop.org/2017/paper/MLG2017_paper_8.pdf">Star sampling with and without replacement - Stokes and Weber (KDD Workshop 2017)</a>
+<br><br>
+<h3>Journal Letters and Papers</h3>
+<a href="https://www.sciencedirect.com/science/article/pii/S0020019018301509">Common greedy wiring and rewiring heuristics do not guarantee maximum assortative graphs of given degree - Stokes and Weber (IPL 2018)</a>
+<br><br>
+<a href="https://arxiv.org/abs/1901.03393">Star sampling with and without replacement - Stokes and Weber (submitted to TNSE 2019)</a>
+<br><br>
+<h3>PhD. Thesis</h3>
+<!-- <a href="https://sophist0.github.io/files/jonathan_stokes_thesis.pdf">Performance of random walks and sampling for graph search (2018)</a> --!>
+<a href="files/jonathan_stokes_thesis.pdf">Performance of random walks and sampling for graph search (2018)</a>
+<div class="hspacer"></div>
+<h2>Assorted Links</h2>
+<hr>
+<a href="https://github.com/sophist0">My code is on Github</a><br><br>
+<a href="files/resume_042020.pdf">My resume</a><br><br>
+    <a href="crypto_notes.html">Notes on Bitcoin</a>
+</div>
+<div class="hspacer"></div>
+<div class="hspacer"></div>
+</body>
+</html>

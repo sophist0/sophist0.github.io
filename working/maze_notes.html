@@ -1,0 +1,1232 @@
+<html>
+<head>
+<title>Maze Generation Notes</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<style>
+.grid-container{
+	display: grid;
+	grid-template-columns: auto auto auto auto auto;
+	width: 516px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 5px solid black;
+}
+.grid-item{
+	border: 2px solid black;
+	height: 100px;
+	width: 100px;
+	font-size: 20px;
+	text-align: center;
+}
+.grid-spacer{
+	height: 36px;
+	width: 100%;
+}
+.grid-container-2{
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+	width: 536px;
+	margin-left: auto;
+	margin-right: auto;
+	/*border: 5px solid black;*/
+}
+.grid-item-2{
+	border: 2px solid black;
+	height: 50px;
+	width: 50px;
+	font-size: 20px;
+	text-align: center;
+}
+
+.grid-edge-2{
+	height: 50px;
+	width: 50px;
+	font-size: 20px;
+	text-align: center;
+}
+
+/*##################################*/
+.edge-0{
+	border-left: 2px solid black;
+	border-top: 2px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-1{
+	border-bottom: 2px solid black;
+	border-top: 2px solid black;
+	border-right: 2px solid black;
+	border-left: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-2{
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid black;
+	border-top: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-3{
+	border-left: 2px solid black;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	border-right: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-4{
+	border-left: 2px solid black;
+	border-bottom: 2px solid black;
+	border-top: 2px solid white;
+	border-right: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-5{
+	border-right: 2px solid black;
+	border-top: 2px solid black;
+	border-bottom: 2px solid white;
+	border-left: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-6{
+	border-top: 2px solid black;
+	border-left: 2px solid black;
+	border-bottom: 2px solid white;
+	border-right: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-7{
+	border-right: 2px solid black;
+	border-bottom: 2px solid black;
+	border-top: 2px solid white;
+	border-left: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-8{
+	border-right: 2px solid black;
+	border-top: 2px solid white;
+	border-bottom: 2px solid white;
+	border-left: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-9{
+	border-left: 2px solid black;
+	border-top: 2px solid white;
+	border-bottom: 2px solid white;
+	border-right: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-10{
+	border-top: 2px solid black;
+	border-right: 2px solid white;
+	border-bottom: 2px solid white;
+	border-left: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-11{
+	border-bottom: 2px solid black;
+	border-top: 2px solid white;
+	border-right: 2px solid white;
+	border-left: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-12{
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	border-left: 2px solid white;
+	border-right: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-13{
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	border-top: 2px solid white;
+	border-bottom: 2px solid white;
+	height: 50px;
+	width: 50px;
+}
+.edge-14{
+	height: 50px;
+	width: 50px;
+	font-size: 20px;
+	text-align: center;
+}
+
+.grid-spacer-2{
+	height: 18px;
+	width: 100%;
+}
+
+img.heatmap_l{
+	width: 420px;
+	height: 350px;
+	float:left;
+}
+img.heatmap_r{
+	width: 420px;
+	height: 350px;
+	float:right;
+}
+img.biased_graph{
+	width: 500px;
+	height: 500px;
+}
+.clear_floats{
+	border: solid 2px;
+	width=100%;
+	height: 10px;
+	float:none;
+}
+.heatmap_wrapper{
+	width: 100%;
+	height: 400px;
+	float:none;
+}
+</style>
+</head>
+<body>
+<div class="hspacer"></div>
+<div class="content_block">
+<h1>Maze Generation Notes</h1>
+<hr>
+<p>
+I needed to generate mazes for a project. I wanted to generate mazes of size $n$ ranging up to about $n=100$. Simple problem right, get a grid and start dropping walls. Wrong! It turns out that a maze where every location is accessible and there are no loops is equivalent to a spanning tree. A spanning tree is just a path which visits every node in a graph exactly once without any cycles. Spanning trees are used in some path finding algorithms but are interesting mathematical objects in their own right.
+</p>
+<p>
+Although I have a background in graph theory spanning trees where not my first thought when it came to maze generation, instead I thought of a random walk. A simple random walk to be specific. In a simple random walk given the walks current location you transition with equal probability to every adjacent node, and the process repeats possibly forever.
+</p>
+<p>
+So say $n=5$ meaning our maze is a grid with $5$ spaces on each side and $25$ spaces in total. Also lets define the mazes entrance at space $(0,0)$ and exit at $(4,4)$.
+</p>
+<div class="grid-container">
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(0,0)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(0,1)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(0,2)$
+<div class="grid-spacer"></div>
+</div>
+  
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(0,3)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(0,4)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(1,0)$
+<div class="grid-spacer"></div>
+</div>  
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(1,1)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(1,2)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(1,3)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(1,4)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(2,0)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(2,1)$
+<div class="grid-spacer"></div>
+</div>
+ 
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(2,2)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(2,3)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(2,4)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(3,0)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(3,1)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(3,2)$
+<div class="grid-spacer"></div>
+</div>  
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(3,3)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(3,4)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(4,0)$
+<div class="grid-spacer"></div>
+</div>  
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(4,1)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(4,2)$
+<div class="grid-spacer"></div>
+</div>
+
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(4,3)$
+<div class="grid-spacer"></div>
+</div>
+  
+<div class="grid-item">
+<div class="grid-spacer"></div>
+$(4,4)$
+<div class="grid-spacer"></div>
+</div>
+</div>
+<p>
+If the random walk is at space $(0,0)$ and diagonal moves are not allowed then it has $\frac{1}{2}$ probability of moving to space $(0,1)$ and $\frac{1}{2}$ probability of moving to space $(1,0)$. If the random walk is allowed to backtrack, i.e. if the random walk is at space $(0,1)$ it is allowed to return to space $(0,0)$ then the random walk will continue indefinitely and it will eventually visit every space. Therefore if the random walk starts in location $(0,0)$ and we terminate it when it reaches space $(4,4)$ we have a random path from space $(0,0)$ to $(4,4)$.
+</p>
+
+<p>
+Of course this path may have dead ends, loops, and may either visit every space in our grid or only $9$ of the $25$ spaces. These are all potentially problems with our generated maze but there is a more subtle problem. To see this ask assuming the random walk starts at $(0,0)$ and is not allowed to backtrack. What is the probability that on the second move the random walk arrives are space $(0,2)$? If the random walk arrives at space $(0,2)$ on the second move it had to be at space $(0,1)$ after the first move. So the probability of moving to space $(0,1)$ on the first move is $\frac{1}{2}$ and the given the random walk is at $(0,1)$ the probability of it moving to location $(0,2)$ is also $\frac{1}{2}$. Therefore we can compute the probability of arriving at space $(0,2)$ on the second move as
+\begin{align}
+P((0,1)|(0,0)) 	&= \frac{1}{2}\\
+P((0,2)|(0,1)) 	&= \frac{1}{2}\\
+P((0,2)|(0,0)) 	&= P((0,1)|(0,0)) P((0,2)|(0,1)\\ 
+		&= \frac{1}{4}
+\end{align}
+Now ask what is the probability of arriving at space $(1,1)$ on the second move? Well its
+\begin{align}
+P((1,1)|(0,0)) 	&= P((0,1)|(0,0)) P((1,1)|(0,1) + P((1,0)|(0,0)) P((1,1)|(1,0)\\
+		&= \frac{1}{4} + \frac{1}{4}\\
+		&= \frac{1}{2}
+\end{align}
+In other words the random walk is more likely to visit center spaces then spaces along the edge. This is shown numerically in the two heatmaps below. These are generated from $1000$ random walks starting at $(0,0)$ and ending at $(4,4)$. The first on the left counts all visits to a space and we see that the random walks spend most of their time near where they begin in space $(0,0)$. But since we are uninterested in repeated visits to a space in maze generation the second heatmap on the right is more useful, it shows each time a space was visited at least once in one of the $1000$ random walks from $(0,0)$ to $(7,7)$. Here it is clear that nearly all random walks pass through the spaces along the diagonal from space $(0,0)$ to $(7,7)$ but only about half make it to spaces $(0,7)$ and $(7,0)$.
+<div class="heatmap_wrapper">
+<img class="heatmap_l" src="images/maze/AllCnt_rw1.png">
+<img class="heatmap_r" src="images/maze/cnt_rw1.png">
+</div>
+</p>
+<p>
+This is a problem because it means the maze generated by this random walk will likely be solvable by simply traversing the diagonal. To rectify this instead of the random walk moving to all adjacent squares with equal probability, we can adjust the probabilities so that the random walk is more likely to visit edge spaces such as $(0,7)$ and $(7,0)$. <b>Using discrete time Markov chain theory there may be an exact solution for the probability of visiting any space in the grid but it likely depends on number of steps $m$ in the random walk. (Look into!!) But not knowing $m$ I choose to try a rough approximation.</b> The basic problem we observed above is that if we approximate the undirected graph the random walk traverses as a directed graph the probability of visiting space $(1,1)$ at $m=2$ is twice that of visiting space $(0,2)$. The following two figures show the true undirected graph on the left and my approximation of it with a directed graph on the right for $n=3$.
+</p>
+<div class="heatmap_wrapper">
+<img class="heatmap_l" src="images/maze/undirected_graph.png">
+<img class="heatmap_r" src="images/maze/directed_graph.png">
+</div>
+
+Now lets try a simple random walk biasing scheme that should push the random walk toward the edges of the maze. The figure below gives the bias scheme, bias $2^0=1$ for the diagonal nodes $(0,0)$, $(1,1)$, and $(2,2)$, bias of $2^1=2$ for $1$ step left and right of the diagonal, and generally $2^x$ for $x$ steps off the diagonal. 
+<img class="biased_graph" src="images/maze/baised_directed_v1.png">
+These biases can be put into a  matrix for the $9$ spaces and then row normalized so the probability of leaving any space is $1$ giving the transition matrix below.
+
+<br>
+<div class="grid-container-2">
+<div class="grid-edge-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$1$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$2$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$3$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$4$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$5$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$6$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$7$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$8$
+<div class="grid-spacer-2"></div>
+</div>
+  
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>  
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+ 
+<div class="grid-item-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$1$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{2}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>  
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>  
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$2$
+<div class="grid-spacer-2"></div>
+</div>
+  
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$3$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{2}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$4$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$5$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{2}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$6$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$7$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{2}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$8$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+
+<div class="grid-item-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-item-2">
+</div>
+</div>
+<p>
+Running a random walk $1000$ times using this biasing scheme with a grid of size $n=8$ gives the following heatmaps. The one on the left counts all visits to a space and the one on the right just the first visit. In both its clear that the edge spaces are visited more often then in the unbiased case in fact the diagonal spaces are now less visited than the edge spaces.
+
+<div class="heatmap_wrapper">
+<img class="heatmap_l" src="images/maze/AllCnt_rw2.png">
+<img class="heatmap_r" src="images/maze/cnt_rw2.png">
+</div>
+We can moderate this biasing of the random walk toward the edge spaces as follows. Let $i$ be the first entry of the tuple $(i,j)$ indicating a space in the grid, $j$ the second entry, and $abs()$ be the absolute value function. The bias $b_{i,j}$ of transitioning to the space represented by tuple $(i,j)$ can be computed as
+\begin{equation}
+b_{i,j} = 2^{\frac{abs(i-j)}{c}}
+\end{equation}
+Notice if $c=1$ the random walk bias is the same as in the figures above and as $c\to\infty$ the random walk approaches an unbiased random walk. For instance letting $c=2$ and running the random walk $1000$ times gives the following heatmaps which fall somewhere between the first unbiased random walk and the second biased random walk.
+<div class="heatmap_wrapper">
+<img class="heatmap_l" src="images/maze/AllCnt_rw3.png">
+<img class="heatmap_r" src="images/maze/cnt_rw3.png">
+</div>
+Now my ordinal thought was that it might be possible to find a parameterization of $c$ such that the probability the random walk visiting any space in the mazes grid is equal, implying that the heatmaps would be a uniform color with a small margin of error. However I am not sure that such a parameterization of $c$ exists. Instead I think it more likely that my justification of the biasing scheme which approximated an undirected graph as a directed graph is obscuring more complicated dynamics. It might be worth comparing the mazes generated using this bias random walk technique to those generated using Wilson's algorithm which selects a maze or spanning tree from the set of spanning trees with uniform probability and the time it takes for both techniques of generate mazes or spanning trees.
+</p>
+<p>
+Adding some additional ad-hoc techniques to generate branches off the mazes solution path gives an algorithm that can produce an arbitrarily sized maze such as the one shown below.
+</p>
+
+<br>
+<div class="grid-container-2">
+<div class="grid-edge-2">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$1$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$2$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$3$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$4$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$5$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$6$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$7$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$8$
+<div class="grid-spacer-2"></div>
+</div>
+  
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+</div>
+
+<div class="edge-0">
+</div>  
+
+<div class="edge-6">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-5">
+</div>
+
+<div class="edge-3">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-12">
+</div>
+ 
+<div class="edge-5">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$1$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-8">
+</div>
+
+<div class="edge-13">
+</div>
+
+<div class="edge-6">
+</div>  
+
+<div class="edge-7">
+</div>
+
+<div class="edge-6">
+</div>
+
+<div class="edge-10">
+</div>  
+
+<div class="edge-12">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$2$
+<div class="grid-spacer-2"></div>
+</div>
+  
+<div class="edge-6">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="edge-2">
+</div>
+
+<div class="edge-9">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-5">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$3$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-9">
+</div>
+
+<div class="edge-1">
+</div>
+
+<div class="edge-6">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="edge-0">
+</div>
+
+<div class="edge-6">
+</div>
+
+<div class="edge-5">
+</div>
+
+<div class="edge-0">
+</div>
+
+<div class="edge-13">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$4$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-9">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="edge-6">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="edge-13">
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-8">
+</div>
+
+<div class="edge-13">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$5$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-9">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-1">
+</div>
+
+<div class="edge-9">
+</div>
+
+<div class="edge-1">
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-5">
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$6$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-9">
+</div>
+
+<div class="edge-1">
+</div>
+
+<div class="edge-6">
+</div>
+
+<div class="edge-11">
+</div>
+
+<div class="edge-10">
+</div>
+
+<div class="edge-1">
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-5">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$7$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-11">
+</div>
+
+<div class="edge-5">
+</div>
+
+<div class="edge-4">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-5">
+</div>
+
+<div class="edge-13">
+</div>
+
+<div class="grid-edge-2">
+<div class="grid-spacer-2"></div>
+$8$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="edge-3">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-12">
+</div>
+
+<div class="edge-7">
+</div>
+
+<div class="edge-2">
+</div>
+</div>
+
+
+<h2>To Do</h2>
+<hr>
+Compare my method of maze generation against several other methods such as Randomized Kruskal's algorithm and Wilson's algorithm. 
+<p>
+<b>Sources:</b><br>
+$^{(1)}$ <a href="https://en.wikipedia.org/wiki/Spanning_tree">https://en.wikipedia.org/wiki/Spanning_tree</a><br>
+$^{(2)}$ <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm">https://en.wikipedia.org/wiki/Maze_generation_algorithm</a><br>
+$^{(3)}$<a href="http://www.astrolog.org/labyrnth/algrithm.htm">http://www.astrolog.org/labyrnth/algrithm.htm</a><br>
+</p>
+<hr>
+<div class="hspacer"></div>
+</div>
+</body>
+</html>

@@ -1039,6 +1039,956 @@ $^{(3)}$<a href="http://www.astrolog.org/labyrnth/algrithm.htm">http://www.astro
 </p>
 <hr>
 <div class="hspacer"></div>
+
+<h1>A More Exact Solution</h1>
+<hr>
+<p>
+In passing I mentioned that there might be an exact solution that could be found for a biased transition matrix given a desired probability distribution of visiting each space in the grid. Well I'm still not sure exactly how this maps onto Markov chain theory nor have I tested the following numerically but I will give the general thrust of a solution.
+</p>
+<p>
+Say $n=3$, we have $9$ states, and we start at state $0$ with absorbing state $8$. Now lets look at how the probability of the walk being in a given state changes with each step.
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+1
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+2
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+3
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+4
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+5
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+6
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+7
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+8
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<div class="store_step">
+<hr>
+$step=0$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+1
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=1$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=2$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+$\frac{1}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+$\frac{1}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=3$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{1}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{1}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=4$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+$\frac{2}{9}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+$\frac{1}{3}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+$\frac{1}{9}$
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=5$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{5}{18}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{5}{18}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{6}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+</p>
+
+<p>
+Notice that since state $9$ is an absorbing state it acts as a probability sink in step $5$. Basically you see waves of probability slowly sinking into the absorbing state. What patterns can we draw from this?
+</p>
+<table style="width:100%">
+  <tr>
+    <th>Step</th>
+    <th>Possible States</th> 
+    <th>Number of Possible States</th>
+  </tr>
+  <tr>
+     <th>$0$</th>
+     <th>$0$</th> 
+     <th>$2^0$</th>
+  </tr>
+  <tr>
+    <th>$1$</th>
+    <th>$1,3$</th>
+    <th>$2^1$</th>
+  </tr>
+  <tr>
+    <th>$2$</th>
+    <th>$0,2,4,6$</th>
+    <th>$2^2$</th>
+  </tr>
+  <tr>
+    <th>$3$</th>
+    <th>$1,3,5,7$</th>
+    <th>$2^2$</th>
+  </tr>
+  <tr>
+    <th>$4$</th>
+    <th>$0,2,4,6,8$</th>
+    <th>$2^2+2^0$</th>
+  </tr>
+  <tr>
+    <th>$5$</th>
+    <th>$1,3,5,7$</th>
+    <th>$2^2$</th>
+  </tr>
+</table>
+<p>
+There is actually less of a pattern in the growth of number of possible states in each step then there first appears. If we look at a grid of size $n=4$ we see the pattern break down. 
+</p>
+<table style="width:100%">
+  <tr>
+    <th>Step</th>
+    <th>Possible States</th> 
+    <th>Number of Possible States</th>
+  </tr>
+  <tr>
+     <th>$0$</th>
+     <th>$0$</th> 
+     <th>$2^0$</th>
+  </tr>
+  <tr>
+    <th>$1$</th>
+    <th>$1,4$</th>
+    <th>$2^1$</th>
+  </tr>
+  <tr>
+    <th>$2$</th>
+    <th>$0,2,5,8$</th>
+    <th>$2^2$</th>
+  </tr>
+  <tr>
+    <th>$3$</th>
+    <th>$1,4,3,6,9,12$</th>
+    <th>$2^2+2^1$</th>
+  </tr>
+  <tr>
+    <th>$4$</th>
+    <th>$0,2,5,8,7,10,13$</th>
+    <th>$2^2+2^1+2^0$</th>
+  </tr>
+  <tr>
+    <th>$5$</th>
+    <th>$1,4,3,6,9,12,11,14$</th>
+    <th>$2^3$</th>
+  </tr>
+  <tr>
+    <th>$6$</th>
+    <th>$0,2,5,8,7,10,13,15$</th>
+    <th>$2^3$</th>
+  </tr>
+  <tr>
+    <th>$7$</th>
+    <th>$1,4,3,6,9,12,11,14$</th>
+    <th>$2^3$</th>
+  </tr>
+</table>
+<p>
+Maybe if I looked at more examples I could find an equation for this number but I'm not sure how important it is and likely someone else has already derived it.
+</p>
+
+My goal is to change the probability of being at each state for $n=3$ to be the following.
+
+<div class="store_step">
+<hr>
+$step=0$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+1
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=1$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=2$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=3$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=4$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+
+<div class="store_step">
+<hr>
+$step=5$
+</div>
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{5}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+</p>
+<p>
+Lets define the grid state at $step=0$ as a vector $v_0$, the grid state at $step=1$ as $v_1$, and the grid state at $step=i$ as $v_i$. Each vector $v_i$ is straightforward to compute given $v_0$. The question is how to compute a transition matrix $T_{0,1}$ given vectors $v_0$ and $v_1$? This is simple to express,
+
+\begin{align}
+v_0 T_{0,1}	&=	v_1\\
+T_{0,1}		&=	v_0^{-1}v_1
+\end{align}
+
+Unfortunately the inverse of $v_0$ does not exist since it is not a square matrix. But since $v_0$ is a row matrix consisting of a single column it follows that its columns are independent. Therefore
+$$
+v_0^+v_0 = I
+$$
+where $v_0^+$ is the Moore-Penrose inverse or pseudo-inverse and $I$ is the identity matrix. Therefore if $v_0^+$ is computable then
+\begin{align}
+v_0 T_{0,1}		&=	v_1\\
+v_0^+ v_0 T_{0,1}	&=	v_0^{+}v_1\\
+I T_{0,1}		&=	v_0^{+}v_1\\
+T_{0,1}			&=	v_0^{+}v_1\\
+\end{align}
+
+To $v_0^+$ is computable as
+\begin{equation}
+v_0^+ = v_0^T\left(v_0v_0^T\right)^{-1}
+\end{equation}
+
+Unfortunately since $v_{0}$ is almost all zeros it follows that $v_{0}v_{0}^T$ is singular and its inverse $\left(v_{0}v_{0}^T\right)^{-1}$ does not exist. However in the limit
+\begin{equation}
+v_{0}^+ = \lim_{\delta \to 0} \left( A^*A + \delta I \right)^{-1} A^* = \lim_{\delta \to 0} A^* \left( A^*A + \delta I \right)^{-1}
+\end{equation}
+which is the Tikonov Regularization (wikipedia). Where $A^*$ is simply the transpose of $A$ is all real numbers and $\delta$ is an arbitrarily small number.
+</p>
+<h2>Relation to SVD and the Wiener filter (wikipedia)</h2>
+<p>
+Assume the SVD of $A$ exists (and I think it does in the case of $v_0$) then
+$$
+A = U \Sigma V^T
+$$
+with singular values $\sigma_i$. The Tikhonov regularized solution can than be expressed as
+$$
+\hat{x} = VDU^T\hat{b}
+$$
+where (I think in the Moore-Penrose $\hat{b}$ is a ones vector) and $D$ has diagonal values then,
+$$
+D_{i,i} = \frac{\sigma_i}{\sigma_i^2 + \delta^2}
+$$
+Notice that this implies that one should be able to remove the $\delta^2$ from the nonzero elements (where $\sigma_i\neq 0$) of the Tikonov Regularization. Would this help or hurt the accuracy of the computation of $T_{0,1}$ or generally $T_{i-1,i}$?
+</p>
+<!-- End Tags --!>
+<div class="hspacer"></div>
 </div>
 </body>
 </html>

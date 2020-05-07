@@ -6,6 +6,22 @@
 	margin-right: auto;
 	border: 5px solid black;
 }
+.grid-container-2{
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+	width: 536px;
+	margin-left: auto;
+	margin-right: auto;
+	/*border: 5px solid black;*/
+}
+.grid-container-3{
+	display: grid;
+	grid-template-columns: auto auto auto;
+	width: 156px;
+	margin-left: auto;
+	margin-right: auto;
+	/*border: 5px solid black;*/
+}
 .grid-item{
 	border: 2px solid black;
 	height: 100px;
@@ -16,14 +32,6 @@
 .grid-spacer{
 	height: 36px;
 	width: 100%;
-}
-.grid-container-2{
-	display: grid;
-	grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-	width: 536px;
-	margin-left: auto;
-	margin-right: auto;
-	/*border: 5px solid black;*/
 }
 .grid-item-2{
 	border: 2px solid black;
@@ -38,6 +46,11 @@
 	width: 50px;
 	font-size: 20px;
 	text-align: center;
+}
+
+.store_step{
+	/*margin-left: auto;
+	margin-right: auto;*/
 }
 
 /*##################################*/
@@ -171,6 +184,15 @@
 	height: 50px;
 	width: 50px;
 	font-size: 20px;
+	text-align: center;
+}
+.edge-15{
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	height: 50px;
+	width: 50px;
 	text-align: center;
 }
 

@@ -20,7 +20,7 @@ MathJax = {
 <h1>Maze Generation Notes</h1>
 <hr>
 <p>
-I needed to generate mazes for a project. I wanted to generate mazes of size $n$ ranging from $n=10$ to about $n=100$. Simple problem right, get a grid and start dropping walls. Wrong! It turns out that a maze were every location is accessible and there are no loops is equivalent to a spanning tree. A spanning tree is a path which visits every node in a graph exactly once without any cycles. Spanning trees appear some path finding algorithms but are interesting mathematical objects in their own right.
+I needed to generate mazes for a project. I wanted to generate mazes of size $n$ ranging from $n=10$ to about $n=100$. Simple problem right, get a grid and start dropping walls. Wrong! It turns out that a maze where every location is accessible and there are no loops is equivalent to a spanning tree. A spanning tree is a path which visits every node in a graph exactly once without any cycles. Spanning trees appear some path finding algorithms but are interesting mathematical objects in their own right.
 </p>
 <p>
 Although I have a background in graph theory, spanning trees were not my first thought when it came to maze generation, instead I thought of a random walk, a simple random walk to be specific. In a simple random walk given the walks current location you move with equal probability to every adjacent space or node, and the process repeats possibly forever.
@@ -184,7 +184,7 @@ If the simple random walk is at space $(0,0)$ and diagonal moves are not allowed
 </p>
 
 <p>
-Of course this path may have dead ends, loops, and may either visit every space in our grid or only $9$ of the $25$ spaces. These are all potentially problems with our generated maze but there is a more subtle problem. To see this ask assuming the random walk starts at $(0,0)$ and is not allowed to backtrack. What is the probability that on the second move the random walk arrives are space $(0,2)$? If the random walk arrives at space $(0,2)$ on the second move it had to be at space $(0,1)$ after the first move. So given that the probability of moving to space $(0,1)$ on the first move is $\frac{1}{2}$ and the given the random walk is at $(0,1)$ the probability of it moving to location $(0,2)$ is also $\frac{1}{2}$, the probability of arriving at space $(0,2)$ on the second move can be computed as follows,
+Of course this path may have loops and may either visit every space in our grid or only $9$ of the $25$ spaces. These are all potential problems with our generated maze but there is a more subtle problem. To see this ask assuming the random walk starts at $(0,0)$ and is not allowed to backtrack, what is the probability that on the second move the random walk arrives are space $(0,2)$? If the random walk arrives at space $(0,2)$ on the second move it had to be at space $(0,1)$ after the first move. So given that the probability of moving to space $(0,1)$ on the first move is $\frac{1}{2}$ and the given the random walk is at $(0,1)$ the probability of it moving to location $(0,2)$ is also $\frac{1}{2}$, the probability of arriving at space $(0,2)$ on the second move can be computed as follows,
 \begin{align}
 P((0,1)|(0,0)) 	&= \frac{1}{2}\\
 P((0,2)|(0,1)) 	&= \frac{1}{2}\\

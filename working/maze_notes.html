@@ -1987,6 +1987,37 @@ D_{i,i} = \frac{\sigma_i}{\sigma_i^2 + \delta^2}
 $$
 Notice that this implies that one should be able to remove the $\delta^2$ from the nonzero elements (where $\sigma_i\neq 0$) of the Tikonov Regularization. Would this help or hurt the accuracy of the computation of $T_{0,1}$ or generally $T_{i-1,i}$?
 </p>
+<hr>
+<h2>So this method does not work!</h2>
+<br><br>
+<hr>
+<p>
+The reason is that the linear algebra approach is a global approach. Therefore it produces a matrix $T_{0,1}$ such that
+$$
+v_1 = v_0 T_{0,1}
+$$
+$$
+v_2 = v_1 T_{1,2}
+$$
+However it does so be allowing invalid transitions for example a transition from state $(0,1)$ to state $(1,0)$. 
+</p>
+<p>
+I think the solution is to take an algorithmic approach. For example let $P_i$ be all the states the random walk could be in at time $i$.
+<br>
+Let vector $l$ be a vector of $n$ zeros where $n$ is the number of states. Therefore $l[j]$ is the count of the states each state $j$ is accessible from.
+<br>
+For each $s \in S$
+<br>
+&emsp; For $j$ in range(len(l)):
+<br>
+&emsp; &emsp; If $j$  is accessible from $s$
+<br>
+&emsp; &emsp; &emsp; $T[j][s] = \frac{1}{l[j]}$
+<br>
+Row normalize $T$ and return it.
+</p>
+<hr>
+Obviously I need to clean up this algorithm and test it.
 <!-- End Tags --!>
 <div class="hspacer"></div>
 </div>

@@ -1052,7 +1052,9 @@ $^{(3)}$<a href="http://www.astrolog.org/labyrnth/algrithm.htm">http://www.astro
 I mentioned that I had tried to find an exact solution for a biased transition matrix given a desired probability distribution of visiting each space in the grid. Well I'm not sure I have a general solution but I might have a specific one, which at least generates nice figures!
 </p>
 <p>
-Say $n=3$, we have $9$ states, and we start at state $0$ with absorbing state $8$. Now lets look at how the probability of a simple random walk being in a given state changes with each step.
+Say $n=3$, we have $9$ states, and we assume that the random walk starts at state $0$. Now lets look at how the probability of a simple random walk (left) vs my target probability (right) being in a given state changes with each step of the random walk.
+<!--
+<div class="grid-container-5">
 <div class="grid-container-3">
 <div class="edge-6">
 <div class="grid-spacer-2"></div>
@@ -1108,11 +1110,17 @@ Say $n=3$, we have $9$ states, and we start at state $0$ with absorbing state $8
 <div class="grid-spacer-2"></div>
 </div>
 </div>
+</div>
+--!>
+
+<!-- ################################################# --!>
+<div class="clear_block"></div>
 
 <div class="store_step">
 <hr>
 $step=0$
 </div>
+<div class="grid-container-4">
 <div class="grid-container-3">
 <div class="edge-6">
 <div class="grid-spacer-2"></div>
@@ -1169,9 +1177,8 @@ $step=0$
 </div>
 </div>
 
-
-<!-- STOPPED --!>
-
+<!-- ################################################# --!>
+<div class="hspace_1"></div>
 
 <div class="grid-container-3">
 <div class="edge-6">
@@ -1226,15 +1233,19 @@ $step=0$
 <div class="grid-spacer-2"></div>
 0
 <div class="grid-spacer-2"></div>
+</div>
 </div>
 </div>
 
 <!-- ######################################################## --!>
+<div class="clear_block"></div>
 
 <div class="store_step">
 <hr>
 $step=1$
 </div>
+
+<div class="grid-container-4">
 <div class="grid-container-3">
 <div class="edge-6">
 <div class="grid-spacer-2"></div>
@@ -1290,71 +1301,76 @@ $\frac{1}{2}$
 <div class="grid-spacer-2"></div>
 </div>
 </div>
-
-
-<div class="grid-container-3">
-<div class="edge-6">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-0">
-<div class="grid-spacer-2"></div>
-$\frac{1}{2}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-5">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-3">
-<div class="grid-spacer-2"></div>
-$\frac{1}{2}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-15">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-1">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-4">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-2">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-7">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-</div>
-
 
 <!-- ######################################################## --!>
+<div class="hspace_1"></div>
+
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{1}{2}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+<div class="clear_block"></div>
+</div>
 
 <div class="store_step">
 <hr>
 $step=2$
 </div>
+
+<div class="grid-container-4">
 <div class="grid-container-3">
 <div class="edge-6">
 <div class="grid-spacer-2"></div>
@@ -1395,62 +1411,6 @@ $0$
 <div class="edge-4">
 <div class="grid-spacer-2"></div>
 $\frac{1}{6}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-2">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-7">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-</div>
-
-<div class="grid-container-3">
-<div class="edge-6">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-0">
-<div class="grid-spacer-2"></div>
-$0$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-5">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-3">
-<div class="grid-spacer-2"></div>
-$0$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-15">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-1">
-<div class="grid-spacer-2"></div>
-$0$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-4">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
 <div class="grid-spacer-2"></div>
 </div>
 
@@ -1468,11 +1428,74 @@ $\frac{1}{4}$
 </div>
 
 <!-- ######################################################## --!>
+<div class="hspace_1"></div>
+
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$0$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+<div class="clear_block"></div>
 
 <div class="store_step">
 <hr>
 $step=3$
 </div>
+
+<div class="grid-container-4">
 <div class="grid-container-3">
 <div class="edge-6">
 <div class="grid-spacer-2"></div>
@@ -1528,72 +1551,76 @@ $\frac{1}{6}$
 <div class="grid-spacer-2"></div>
 </div>
 </div>
-
-
-
-<div class="grid-container-3">
-<div class="edge-6">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-0">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-5">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-3">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-15">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-1">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-4">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-2">
-<div class="grid-spacer-2"></div>
-$\frac{1}{4}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-7">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-</div>
-
 
 <!-- ######################################################## --!>
+<div class="hspace_1"></div>
+
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+$\frac{1}{4}$
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+</div>
+
+<!-- ######################################################## --!>
+<div class="clear_block"></div>
 
 <div class="store_step">
 <hr>
 $step=4$
 </div>
+
+<div class="grid-container-4">
 <div class="grid-container-3">
 <div class="edge-6">
 <div class="grid-spacer-2"></div>
@@ -1650,6 +1677,8 @@ $\frac{1}{9}$
 </div>
 </div>
 
+<!-- ######################################################## --!>
+<div class="hspace_1"></div>
 
 <div class="grid-container-3">
 <div class="edge-6">
@@ -1706,189 +1735,27 @@ $\frac{1}{5}$
 <div class="grid-spacer-2"></div>
 </div>
 </div>
+</div>
 
 <!-- ######################################################## --!>
-
-<p>
-Notice that since state $9$ is an absorbing state it acts as a probability sink in step $5$. Basically you see waves of probability slowly sinking into the absorbing state. What patterns can we draw from this?
-</p>
-<table style="width:100%">
-  <tr>
-    <th>Step</th>
-    <th>Possible States</th> 
-    <th>Number of Possible States</th>
-  </tr>
-  <tr>
-     <th>$0$</th>
-     <th>$0$</th> 
-     <th>$2^0$</th>
-  </tr>
-  <tr>
-    <th>$1$</th>
-    <th>$1,3$</th>
-    <th>$2^1$</th>
-  </tr>
-  <tr>
-    <th>$2$</th>
-    <th>$0,2,4,6$</th>
-    <th>$2^2$</th>
-  </tr>
-  <tr>
-    <th>$3$</th>
-    <th>$1,3,5,7$</th>
-    <th>$2^2$</th>
-  </tr>
-  <tr>
-    <th>$4$</th>
-    <th>$0,2,4,6,8$</th>
-    <th>$2^2+2^0$</th>
-  </tr>
-  <tr>
-    <th>$5$</th>
-    <th>$1,3,5,7$</th>
-    <th>$2^2$</th>
-  </tr>
-</table>
-<p>
-There is actually less of a pattern in the growth of number of possible states in each step then there first appears. If we look at a grid of size $n=4$ we see the pattern break down. 
-</p>
-<table style="width:100%">
-  <tr>
-    <th>Step</th>
-    <th>Possible States</th> 
-    <th>Number of Possible States</th>
-  </tr>
-  <tr>
-     <th>$0$</th>
-     <th>$0$</th> 
-     <th>$2^0$</th>
-  </tr>
-  <tr>
-    <th>$1$</th>
-    <th>$1,4$</th>
-    <th>$2^1$</th>
-  </tr>
-  <tr>
-    <th>$2$</th>
-    <th>$0,2,5,8$</th>
-    <th>$2^2$</th>
-  </tr>
-  <tr>
-    <th>$3$</th>
-    <th>$1,4,3,6,9,12$</th>
-    <th>$2^2+2^1$</th>
-  </tr>
-  <tr>
-    <th>$4$</th>
-    <th>$0,2,5,8,7,10,13$</th>
-    <th>$2^2+2^1+2^0$</th>
-  </tr>
-  <tr>
-    <th>$5$</th>
-    <th>$1,4,3,6,9,12,11,14$</th>
-    <th>$2^3$</th>
-  </tr>
-  <tr>
-    <th>$6$</th>
-    <th>$0,2,5,8,7,10,13,15$</th>
-    <th>$2^3$</th>
-  </tr>
-  <tr>
-    <th>$7$</th>
-    <th>$1,4,3,6,9,12,11,14$</th>
-    <th>$2^3$</th>
-  </tr>
-</table>
-<p>
-Maybe if I looked at more examples I could find an equation for this number but I'm not sure how important it is and likely someone else has already derived it.
-</p>
-
-My goal is to change the probability of being at each state for $n=3$ to be the following.
-
-
-<!-- ######################################################## --!>
-
-
-
-<!-- ######################################################## --!>
-
-
-<!-- ######################################################## --!>
-
-<div class="store_step">
+<div class="clear_block"></div>
 <hr>
-$step=4$
-</div>
-
-<!-- ######################################################## --!>
-
-<div class="store_step">
-<hr>
-$step=5$
-</div>
-<div class="grid-container-3">
-<div class="edge-6">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-0">
-<div class="grid-spacer-2"></div>
-$\frac{1}{5}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-5">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-3">
-<div class="grid-spacer-2"></div>
-$\frac{1}{5}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-15">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-1">
-<div class="grid-spacer-2"></div>
-$\frac{1}{5}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-4">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-2">
-<div class="grid-spacer-2"></div>
-$\frac{1}{5}$
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-7">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-</div>
-</p>
 <p>
-Lets define the grid state at $step=0$ as a vector $v_0$, the grid state at $step=1$ as $v_1$, and the grid state at $step=i$ as $v_i$. Each vector $v_i$ is straightforward to compute given $v_0$. The question is how to compute a transition matrix $T_{0,1}$ given vectors $v_0$ and $v_1$? This is simple to express,
+Take away, first the probability of being in any given state under a simple random walk is not the same my target probability after step $2$. Second, notice that step $4$ of our target probability distribution has achieved "saturation" having reached all squares of the grid and simply oscillates between the distribution in step $3$ and $4$ for every step that follows.
+</p>
+
+<h2> Attempt 1</h2><br>
+
+<p>
+I first tried to take a linear algebra approach to finding the transition matrices which would achieve my target distributions at each step. Lets define the grid state at $step=0$ as a vector $v_0$, the grid state at $step=1$ as $v_1$, and the grid state at $step=i$ as $v_i$. Each vector $v_i$ is straightforward to compute given $v_0$. The question is how to compute a transition matrix $T_{0,1}$ given vectors $v_0$ and $v_1$? This is simple to express,
 
 \begin{align}
 v_0 T_{0,1}	&=	v_1\\
 T_{0,1}		&=	v_0^{-1}v_1
 \end{align}
+
+<b>STOPPED - need to check against code</b><br><br>
+
 
 Unfortunately the inverse of $v_0$ does not exist since it is not a square matrix. But since $v_0$ is a row matrix consisting of a single column it follows that its columns are independent. Therefore
 $$
@@ -1944,22 +1811,9 @@ $$
 However it does so be allowing invalid transitions for example a transition from state $(0,1)$ to state $(1,0)$. 
 </p>
 <p>
-I think the solution is to take an algorithmic approach. For example let $P_i$ be all the states the random walk could be in at time $i$.
-<br>
-Let vector $l$ be a vector of $n$ zeros where $n$ is the number of states. Therefore $l[j]$ is the count of the states each state $j$ is accessible from.
-<br>
-For each $s \in S$
-<br>
-&emsp; For $j$ in range(len(l)):
-<br>
-&emsp; &emsp; If $j$  is accessible from $s$
-<br>
-&emsp; &emsp; &emsp; $T[j][s] = \frac{1}{l[j]}$
-<br>
-Row normalize $T$ and return it.
-</p>
 <hr>
-Obviously I need to clean up this algorithm and test it.
+
+<h2>Attempt 2</h2><br><br>
 <!-- End Tags --!>
 <div class="hspacer"></div>
 </div>

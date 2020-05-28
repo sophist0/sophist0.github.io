@@ -20,6 +20,23 @@
 	width: 156px;
 	margin-left: auto;
 	margin-right: auto;
+	float: left;
+	/*border: 5px solid black;*/
+}
+.grid-container-4{
+	display: grid;
+	grid-template-columns: auto auto auto;
+	width: 415px;
+	margin-left: auto;
+	margin-right: auto;
+	/*border: 5px solid black;*/
+}
+.grid-container-5{
+	display: grid;
+	grid-template-columns: auto auto auto;
+	width: 157px;
+	margin-left: auto;
+	margin-right: auto;
 	/*border: 5px solid black;*/
 }
 .grid-item{
@@ -51,6 +68,13 @@
 .store_step{
 	/*margin-left: auto;
 	margin-right: auto;*/
+}
+
+.hspace_1{
+	height: 150px;
+	width: 100px;
+	float: left;
+	/*border: 2px solid black;*/
 }
 
 /*##################################*/

@@ -1053,65 +1053,6 @@ I mentioned that I had tried to find an exact solution for a biased transition m
 </p>
 <p>
 Say $n=3$, we have $9$ states, and we assume that the random walk starts at state $0$. Now lets look at how the probability of a simple random walk (left) vs my target probability (right) being in a given state changes with each step of the random walk.
-<!--
-<div class="grid-container-5">
-<div class="grid-container-3">
-<div class="edge-6">
-<div class="grid-spacer-2"></div>
-0
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-0">
-<div class="grid-spacer-2"></div>
-1
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-5">
-<div class="grid-spacer-2"></div>
-2
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-3">
-<div class="grid-spacer-2"></div>
-3
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-15">
-<div class="grid-spacer-2"></div>
-4
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-1">
-<div class="grid-spacer-2"></div>
-5
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-4">
-<div class="grid-spacer-2"></div>
-6
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-2">
-<div class="grid-spacer-2"></div>
-7
-<div class="grid-spacer-2"></div>
-</div>
-
-<div class="edge-7">
-<div class="grid-spacer-2"></div>
-8
-<div class="grid-spacer-2"></div>
-</div>
-</div>
-</div>
---!>
 
 <!-- ################################################# --!>
 <div class="clear_block"></div>
@@ -1754,10 +1695,7 @@ v_0 T_{0,1}	&=	v_1\\
 T_{0,1}		&=	v_0^{-1}v_1
 \end{align}
 
-<b>STOPPED - need to check against code</b><br><br>
-
-
-Unfortunately the inverse of $v_0$ does not exist since it is not a square matrix. But since $v_0$ is a row matrix consisting of a single column it follows that its columns are independent. Therefore
+Unfortunately the inverse of $v_0$ does not exist since it is not a square matrix. But since $v_0$ is a row matrix consisting of a single column it follows that its columns are linearly independent. Therefore
 $$
 v_0^+v_0 = I
 $$
@@ -1769,49 +1707,119 @@ I T_{0,1}		&=	v_0^{+}v_1\\
 T_{0,1}			&=	v_0^{+}v_1\\
 \end{align}
 
-To $v_0^+$ is computable as
+One can compute the Moore-Penrose inverse $v_0^+$ as
 \begin{equation}
 v_0^+ = v_0^T\left(v_0v_0^T\right)^{-1}
 \end{equation}
 
-Unfortunately since $v_{0}$ is almost all zeros it follows that $v_{0}v_{0}^T$ is singular and its inverse $\left(v_{0}v_{0}^T\right)^{-1}$ does not exist. However in the limit
+Unfortunately since $v_{0}$ is at least half zeros it follows that $v_{0}v_{0}^T$ is singular and its inverse $\left(v_{0}v_{0}^T\right)^{-1}$ does not exist. However in the limit
 \begin{equation}
 v_{0}^+ = \lim_{\delta \to 0} \left( A^*A + \delta I \right)^{-1} A^* = \lim_{\delta \to 0} A^* \left( A^*A + \delta I \right)^{-1}
 \end{equation}
-which is the Tikonov Regularization (wikipedia). Where $A^*$ is simply the transpose of $A$ is all real numbers and $\delta$ is an arbitrarily small number.
+which is the Tikonov Regularization. Where $A^*$ is the Hermitian transpose which reduced to a simple transpose of $A$ if it is real matrix and $\delta$ is an arbitrarily small number. So subbing in $v_0$ for $A$ gives
+\begin{equation}
+v_{0}^+ = \lim_{\delta \to 0} \left( v_0^Tv_0 + \delta I \right)^{-1} v_0^T
+\end{equation}
 </p>
-<h2>Relation to SVD and the Wiener filter (wikipedia)</h2>
+
 <p>
-Assume the SVD of $A$ exists (and I think it does in the case of $v_0$) then
-$$
-A = U \Sigma V^T
-$$
-with singular values $\sigma_i$. The Tikhonov regularized solution can than be expressed as
-$$
-\hat{x} = VDU^T\hat{b}
-$$
-where (I think in the Moore-Penrose $\hat{b}$ is a ones vector) and $D$ has diagonal values then,
-$$
-D_{i,i} = \frac{\sigma_i}{\sigma_i^2 + \delta^2}
-$$
-Notice that this implies that one should be able to remove the $\delta^2$ from the nonzero elements (where $\sigma_i\neq 0$) of the Tikonov Regularization. Would this help or hurt the accuracy of the computation of $T_{0,1}$ or generally $T_{i-1,i}$?
+Given $v_0$ we can compute $v_1,v_2,\ldots,v_i$ and therefore have
+\begin{align}
+v_0^{+}v_1		&=	T_{0,1}\\
+v_1^{+}v_2		&=	T_{1,2}\\
+\ldots\\
+v_{i-1}^{+}v_i		&=	T_{i-1,i}
+\end{align}
+Lastly I row normalize to $1$ the rows of the resulting transition matrices $T_{i-1,i}$.
 </p>
-<hr>
-<h2>So this method does not work!</h2>
-<br><br>
-<hr>
+
 <p>
-The reason is that the linear algebra approach is a global approach. Therefore it produces a matrix $T_{0,1}$ such that
-$$
-v_1 = v_0 T_{0,1}
-$$
-$$
-v_2 = v_1 T_{1,2}
-$$
-However it does so be allowing invalid transitions for example a transition from state $(0,1)$ to state $(1,0)$. 
+Unfortunately this approach does not work, but not in they way I expected like $v_0T_{0,1}\neq v_1$. Lets take for example $i=4$ and we know
+\begin{align}
+v_3 	&= 	\left[0,\frac{1}{4},0,\frac{1}{4},0,\frac{1}{4},0,\frac{1}{4},0\right]\\
+v_4 	&= 	\left[\frac{1}{5},0,\frac{1}{5},0,\frac{1}{5},0,\frac{1}{5},0,\frac{1}{5}\right]\\
+\end{align}
+Now the algorithm above gives,
+\begin{align}
+T_{3,4}	&=	\left[
+\begin{array}{ccccccccc}
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5} 	&0	&\frac{1}{5}\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5} 	&0	&\frac{1}{5}\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5} 	&0	&\frac{1}{5}\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5}	&0	&\frac{1}{5} 	&0	&\frac{1}{5}\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+\end{array}
+\right]
+\end{align}
+Clearly its true that,
+\begin{equation}
+v_3 T_{3,4} = v_4
+\end{equation}
+However recall the grid the random walk is traversing,
+
+<div class="grid-container-5">
+<div class="grid-container-3">
+<div class="edge-6">
+<div class="grid-spacer-2"></div>
+0
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-0">
+<div class="grid-spacer-2"></div>
+1
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-5">
+<div class="grid-spacer-2"></div>
+2
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-3">
+<div class="grid-spacer-2"></div>
+3
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-15">
+<div class="grid-spacer-2"></div>
+4
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-1">
+<div class="grid-spacer-2"></div>
+5
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-4">
+<div class="grid-spacer-2"></div>
+6
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-2">
+<div class="grid-spacer-2"></div>
+7
+<div class="grid-spacer-2"></div>
+</div>
+
+<div class="edge-7">
+<div class="grid-spacer-2"></div>
+8
+<div class="grid-spacer-2"></div>
+</div>
+</div>
+</div>
+The transition matrix $T_{3,4}$ implies that spaces $1,3,5,7$ all transition to space $0$ with probability $\frac{1}{5}$ and given the restriction that the random walk can only move north, south, east, or west by one space this is impossible. Therefore this approach failed.
 </p>
-<p>
-<hr>
 
 <h2>Attempt 2</h2><br><br>
 <!-- End Tags --!>

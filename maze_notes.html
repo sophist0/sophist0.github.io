@@ -2090,11 +2090,87 @@ v_4\\
 1\\
 \end{array}
 \end{align}
-Would that produce a steady state distribution closer to initial goal of uniformly colored counter diagonals? The answer given in the figure below is yes, but unfortunatly such a random walk will not produce a particularly interesting maze.
+Would that produce a steady state distribution closer to initial goal of uniformly colored counter diagonals? The answer given in the figure below is yes, but unfortunately such a random walk will not produce a particularly interesting maze.
 
 <div class="heatmap_wrapper">
 <img class="heatmap_c" src="images/maze/cnt_exact_3.png">
 </div>
+
+
+<h3>The Unconditioned Backtracking Algorithm</h3>
+
+Finally lets test unconditioning on the starting location of the random walk and instead selecting them uniformly at random. This can be represented as the following location vectors $v_0$, $v_1$ and transition matrices $T_{0,1}$, $T_{1,0}$.
+
+\begin{align}
+\begin{array}{c}
+v_0\\
+--\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\end{array}
+\to T_{0,1} \to
+\begin{array}{c}
+v_1\\
+--\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+\end{array}
+\to T_{1,0} \to
+\begin{array}{c}
+v_0\\
+--\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\end{array}
+\to\ldots
+\end{align}
+
+Interestingly if $r_1(X)$ is a function which row normalizes the rows of matrix $X$ and $X^{'}$ is the transpose of matrix $X$ then,
+\begin{equation}
+T_{1,0} = r_1(T_{0,1}^{'})
+\end{equation}
+Additionally since the non-zero rows and columns of $T_{0,1}$ and independent of those of $T_{1,0}$ these two matrices can be combined into one doubly stochastic matrix $T$,
+\begin{equation}
+T = T_{0,1} + T_{1,0}
+\end{equation}
+
+Selecting a starting space uniformly at random and running $1000$ random walks for $100$ steps each produced the following figures. The left figure counts all visits to a space and noticing that the color scale has a range of about $250$ is fairly uniform relative to the other figures. The right figure counts only the first time a random walk visits a space. We see that most walks visit the center spaces and less then half the walks visit the corner spaces.
+<div class="heatmap_wrapper">
+<img class="heatmap_l" src="images/maze/Allcnt_exact_uniform.png">
+<img class="heatmap_r" src="images/maze/cnt_exact_uniform.png">
+</div>
+Now lets compare this for the case of a simple random walk shown in the figures below.
+<div class="heatmap_wrapper">
+<img class="heatmap_l" src="images/maze/All_simple_uniform.png">
+<img class="heatmap_r" src="images/maze/cnt_simple_uniform.png">
+</div>
+Clearly the edge spaces are visited much less frequently in the figure on the left using a simple random walk then the inner spaces. This phenomenon is also somewhat apparent on the right.
+<br><br>
+
+<hr><br>
+
+So in conclusion, can any of this work be adapted to solve problems in the real world? Well at the moment I'm not sure.
 
 <!-- End Tags --!>
 <div class="hspacer"></div>

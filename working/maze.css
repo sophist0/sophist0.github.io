@@ -235,6 +235,11 @@ img.heatmap_r{
 	height: 350px;
 	float:right;
 }
+img.heatmap_c{
+	width: 420px;
+	height: 350px;
+	/*float:right;*/
+}
 img.biased_graph{
 	width: 500px;
 	height: 500px;
@@ -250,3 +255,4 @@ img.biased_graph{
 	height: 400px;
 	float:none;
 }
+

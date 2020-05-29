@@ -6,6 +6,39 @@
 	margin-right: auto;
 	border: 5px solid black;
 }
+.grid-container-2{
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+	width: 536px;
+	margin-left: auto;
+	margin-right: auto;
+	/*border: 5px solid black;*/
+}
+.grid-container-3{
+	display: grid;
+	grid-template-columns: auto auto auto;
+	width: 156px;
+	margin-left: auto;
+	margin-right: auto;
+	float: left;
+	/*border: 5px solid black;*/
+}
+.grid-container-4{
+	display: grid;
+	grid-template-columns: auto auto auto;
+	width: 415px;
+	margin-left: auto;
+	margin-right: auto;
+	/*border: 5px solid black;*/
+}
+.grid-container-5{
+	display: grid;
+	grid-template-columns: auto auto auto;
+	width: 157px;
+	margin-left: auto;
+	margin-right: auto;
+	/*border: 5px solid black;*/
+}
 .grid-item{
 	border: 2px solid black;
 	height: 100px;
@@ -16,14 +49,6 @@
 .grid-spacer{
 	height: 36px;
 	width: 100%;
-}
-.grid-container-2{
-	display: grid;
-	grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
-	width: 536px;
-	margin-left: auto;
-	margin-right: auto;
-	/*border: 5px solid black;*/
 }
 .grid-item-2{
 	border: 2px solid black;
@@ -38,6 +63,18 @@
 	width: 50px;
 	font-size: 20px;
 	text-align: center;
+}
+
+.store_step{
+	/*margin-left: auto;
+	margin-right: auto;*/
+}
+
+.hspace_1{
+	height: 150px;
+	width: 100px;
+	float: left;
+	/*border: 2px solid black;*/
 }
 
 /*##################################*/
@@ -173,6 +210,15 @@
 	font-size: 20px;
 	text-align: center;
 }
+.edge-15{
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
 
 .grid-spacer-2{
 	height: 18px;
@@ -189,6 +235,11 @@ img.heatmap_r{
 	height: 350px;
 	float:right;
 }
+img.heatmap_c{
+	width: 420px;
+	height: 350px;
+	/*float:right;*/
+}
 img.biased_graph{
 	width: 500px;
 	height: 500px;
@@ -204,3 +255,4 @@ img.biased_graph{
 	height: 400px;
 	float:none;
 }
+

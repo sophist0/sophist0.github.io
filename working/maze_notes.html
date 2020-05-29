@@ -1822,6 +1822,329 @@ The transition matrix $T_{3,4}$ implies that spaces $1,3,5,7$ all transition to 
 </p>
 
 <h2>Attempt 2</h2><br><br>
+<p>
+I'm going to be a bit handwavy about this solution because I have not formalized it or tried to prove that it is correct. Its an algorithmic solution which given subsequent probability distributions of the possible locations on the random walk at time $v_i$ and $v_{i+1}$ computes the transition matrix T_{i,i+1}. For example lets take $i=3$ for $n=3$ such that,
+\begin{align}
+v_3 	&= 	\left[0,\frac{1}{4},0,\frac{1}{4},0,\frac{1}{4},0,\frac{1}{4},0\right]\\
+v_4 	&= 	\left[\frac{1}{5},0,\frac{1}{5},0,\frac{1}{5},0,\frac{1}{5},0,\frac{1}{5}\right]\\
+\end{align}
+</p>
+<p>
+This implies that at time $i=3$ the random walk could be at the following locations $l_3=[1,3,5,7]$ and could transition to locations $l_4=[0,2,4,6,8]$. But given the restriction that the random walk only move one space along a vertical for horizontal access only the following transitions are possible.
+\begin{align}
+1 \to [0,2,4]\\
+3 \to [0,4,6]\\
+5 \to [2,4,8]\\
+7 \to [4,6,8]\\
+\end{align}
+</p>
+<p>
+Marking these transitions in a transition matrix with $-1$ gives,
+\begin{align}
+T_{3,4}	&=	\left[
+\begin{array}{ccccccccc}
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+-1	&0	&-1	&0	&-1	&0	&0 	&0	&0\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+-1	&0	&0	&0	&-1	&0	&-1 	&0	&0\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+0	&0	&-1	&0	&-1	&0	&0 	&0	&-1\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+0	&0	&0	&0	&-1	&0	&-1 	&0	&-1\\
+0	&0	&0	&0	&0 	&0	&0 	&0	&0\\
+\end{array}
+\right]
+\end{align}
+</p>
+<p>
+Now first as a transition matrix after the transition values are filled in every row sum with non-zero elements should equal $1$ and every column sum should be
+\begin{equation}
+col\_sum_{i,i+1} = \frac{p_{i+1}}{p_i}
+\end{equation}
+where $p_i$ is the non-zero probability of being at a location at iteration $i$. So for $i=3$,
+\begin{equation}
+col\_sum_{3,4} = \frac{\frac{1}{5}}{\frac{1}{4}} = \frac{4}{5}
+\end{equation}
+</p>
+<p>
+The algorithm then selects the column or row with preference for the columns with the fewest unset elements. If the current probability sum of a column is $col\_sum'=\frac{1}{2}$ and there are two unset elements, assign each element probability $\frac{1}{4}$. If assigning probability $\frac{1}{4}$ to one of these elements would violate a row sum assign that element probability $p'$such that the row sum equals $1$ and the rest of the probability $p'' = col\_sum - (col\_sum' + p')$ to the second element. The same basic procedure is followed in setting the transition probabilities in a row of the transition matrix.
+</p>
+<p>
+For example filling in the columns with two unset elements gives
+\begin{align}
+T_{3,4}	&=	\left[
+\begin{array}{ccccccccc}
+0		&0	&0			&0	&0 	&0	&0 		&0	&0\\
+\frac{2}{5}	&0	&\frac{2}{5}		&0	&-1	&0	&0 		&0	&0\\
+0		&0	&0			&0	&0 	&0	&0 		&0	&0\\
+\frac{2}{5}	&0	&0			&0	&-1	&0	&\frac{2}{5} 	&0	&0\\
+0		&0	&0			&0	&0 	&0	&0 		&0	&0\\
+0		&0	&\frac{2}{5}		&0	&-1	&0	&0 		&0	&\frac{2}{5}\\
+0		&0	&0			&0	&0 	&0	&0 		&0	&0\\
+0		&0	&0			&0	&-1	&0	&\frac{2}{5} 	&0	&\frac{2}{5}\\
+0		&0	&0			&0	&0 	&0	&0 		&0	&0\\
+\end{array}
+\right]
+\end{align}
+This forces the rest of the unset values to be $\frac{1}{5}$ giving,
+\begin{align}
+T_{3,4}	&=	\left[
+\begin{array}{ccccccccc}
+0		&0	&0			&0	&0 		&0	&0 		&0	&0\\
+\frac{2}{5}	&0	&\frac{2}{5}		&0	&\frac{1}{5}	&0	&0 		&0	&0\\
+0		&0	&0			&0	&0 		&0	&0 		&0	&0\\
+\frac{2}{5}	&0	&0			&0	&\frac{1}{5}	&0	&\frac{2}{5} 	&0	&0\\
+0		&0	&0			&0	&0 		&0	&0 		&0	&0\\
+0		&0	&\frac{2}{5}		&0	&\frac{1}{5}	&0	&0 		&0	&\frac{2}{5}\\
+0		&0	&0			&0	&0 		&0	&0 		&0	&0\\
+0		&0	&0			&0	&\frac{1}{5}	&0	&\frac{2}{5} 	&0	&\frac{2}{5}\\
+0		&0	&0			&0	&0 		&0	&0 		&0	&0\\
+\end{array}
+\right]
+\end{align}
+Notice that all rows sum to $1$ and all columns sum to $\frac{4}{5}$.This is a particularly easy transition matrix to compute and in fact filling out these transition matrices by hand for small $n$ is generally pretty straightforward. Formalizing and proving the correctness of an algorithm for arbitrary $n$ is much more difficult. This algorithm also solves an undetermined problem, so the transition matrices produced by this algorithm are not necessarily unique.
+</p>
+<h3>The Conditioned Backtracking Algorithm</h3>
+<p>
+The algorithm above allows us to compute a conditioned transition matrix, conditioned on $v_i$ and $v_{i+1}$ the algorithm produces $T_{i,i+1}$. However this algorithm also conditions on the starting position $0$ and ending position $8$ of the random walk. So for $n=3$ as we saw above this gives the following location vectors and transition matrices.
+</p>
+<p>
+\begin{align}
+\begin{array}{c}
+v_0\\
+--\\
+1\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+\end{array}
+\to T_{0,1} \to
+\begin{array}{c}
+v_1\\
+--\\
+0\\
+\frac{1}{2}\\
+0\\
+\frac{1}{2}\\
+0\\
+0\\
+0\\
+0\\
+0\\
+\end{array}
+\to T_{1,2} \to
+\begin{array}{c}
+v_2\\
+--\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+0\\
+\end{array}
+\to T_{2,3} \to
+\begin{array}{c}
+v_3\\
+--\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\end{array}
+\to T_{3,4} \to
+\begin{array}{c}
+v_4\\
+--\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+\end{array}
+\to \text{(Stop if walk is at space $8$. Else...)}
+\to 
+\begin{array}{c}
+v_2\\
+--\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+0\\
+\end{array}
+\to T_{2,3} \to \ldots
+\end{align}
+Note that the looping back to $v_2$ is conditioned on it not having arrived at space $8$, if it had the random walk would have terminated. Therefore distribution $v_4$ collapses to $v_2$ and the algorithm loops.
+</p>
+<p>
+The result of this algorithm are given below. On the left is a heat map for the number of visits to each space given $1000$ trials. On the right is a heat map for the number of walks of the $1000$ trials that visited as space at least once.
+</p>
+<div class="heatmap_wrapper">
+<img class="heatmap_l" src="images/maze/Allcnt_exact_2.png">
+<img class="heatmap_r" src="images/maze/cnt_exact_2.png">
+</div>
+<p>
+The left figure demonstrates that in one sense we have achieved our goal. Counting all visits to a space is proportional to the steady state probability of being in a space and the counter diagonals are approximately uniform including for spaces along the edge. But given backtracking the steady state probability of actually being in any space is not actually fairly uniform as random walks near space $0$ tend to stay in that area while random walks near space $63$ tend to terminate over a given time period. Instead the steady state probability displays a gradient from the upper left to the lower right corner.
+</p>
+<p>
+The right figure shows that the difference in the spaces visited at least once per walk using this algorithm is to very different from the simple random walk. The difference between the corner spaces $(0,7)$, $(7,0)$ and $(3,3)$, $(4,4)$ are between $200$ and $300$ walks, perhaps with more trials or for larger $n$ the difference would be greater. But one apparent difference is that the random walk using this transition matrix appears to pend less time wandering before reaching termination. Roughly speaking in the simple random walk the average space is visited $800$ out of $1000$ trials while in this biased random walk each space appears visited on average $600$ of the $1000$ trials.
+</p>
+<p>
+<b>Aside:</b> I wonder if by shifting probability weight away from the spaces near $(0,0)$ and toward $(7,7)$ each iteration would reduce or eliminate the gradient in the count of all visits to a space? Naively, I don't see any reason why it wouldn't work.
+</p>
+
+<h3>The Conditioned Non-Backtracking Algorithm</h3>
+
+But say we eliminated backtracking giving the following progression of possible distributions,
+
+\begin{align}
+\begin{array}{c}
+v_0\\
+--\\
+1\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+\end{array}
+\to T_{0,1} \to
+\begin{array}{c}
+v_1\\
+--\\
+0\\
+\frac{1}{2}\\
+0\\
+\frac{1}{2}\\
+0\\
+0\\
+0\\
+0\\
+0\\
+\end{array}
+\to T_{1,2} \to
+\begin{array}{c}
+v_2\\
+--\\
+0\\
+0\\
+\frac{1}{3}\\
+0\\
+\frac{1}{3}\\
+0\\
+\frac{1}{3}\\
+0\\
+0\\
+\end{array}
+\to T_{2,3} \to
+\begin{array}{c}
+v_3\\
+--\\
+0\\
+0\\
+0\\
+0\\
+0\\
+\frac{1}{2}\\
+0\\
+\frac{1}{2}\\
+0\\
+\end{array}
+\to T_{3,4} \to
+\begin{array}{c}
+v_4\\
+--\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
+1\\
+\end{array}
+\end{align}
+Would that produce a steady state distribution closer to initial goal of uniformly colored counter diagonals? The answer given in the figure below is yes, but unfortunatly such a random walk will not produce a particularly interesting maze.
+
+<div class="heatmap_wrapper">
+<img class="heatmap_c" src="images/maze/cnt_exact_3.png">
+</div>
+
+
+<h3>The Unconditioned Backtracking Algorithm</h3>
+
+\begin{align}
+\begin{array}{c}
+v_0\\
+--\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\end{array}
+\to T_{0,1} \to
+\begin{array}{c}
+v_1\\
+--\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+0\\
+\frac{1}{5}\\
+\end{array}
+\to T_{1,0} \to
+\begin{array}{c}
+v_0\\
+--\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\frac{1}{4}\\
+0\\
+\end{array}
+\to\ldots
+\end{align}
+
+
 <!-- End Tags --!>
 <div class="hspacer"></div>
 </div>

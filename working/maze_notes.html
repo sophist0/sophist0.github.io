@@ -668,7 +668,9 @@ where $floor()$ if the floor function although it is not strictly required. Noti
 <img class="heatmap_l" src="images/maze/AllCnt_rw3.png">
 <img class="heatmap_r" src="images/maze/cnt_rw3.png">
 </div>
-My original thought was that it might be possible to find a parameterization of $c$ such that the probability the random walk generating any path from space $(0,0)$ to $(n-1,n-1)$ would be equal, implying that the heatmaps on the left would be a uniform color along the counter diagonals within a small margin of error. However I am not sure that such a parameterization of $c$ exists. Instead I think it more likely that my justification of the biasing scheme which approximated an undirected graph as a directed graph is obscuring dynamics which the parameterization of $c$ does not account for. It might be worth comparing the mazes generated using this biased random walk technique to those generated using Wilson's algorithm which selects a maze or spanning tree from the set of spanning trees with uniform probability. Some of the questions I have are how much less uniform are the spanning trees generated using this biased random walk than Wilson's algorithm, which spanning tree generation technique is more computationally intensive, are these questions even well posed?
+My original thought was that it might be possible to find a parameterization of $c$ such that the probability the random walk generating any path from space $(0,0)$ to $(n-1,n-1)$ would be equal, implying that the heatmaps on the left would be a uniform color along the counter diagonals within a small margin of error. However I am not sure that such a parameterization of $c$ exists. Instead I think it more likely that my justification of the biasing scheme which approximated an undirected graph as a directed graph is obscuring dynamics which no choice of $c$ can account for. 
+
+I originally thought I should compare my biased random walk algorithm for generating mazes to Wilson's algorithm for doing the same. Wilson's algorithm which selects a maze or spanning tree from the set of equal weight spanning trees with uniform probability. However Wilson's sense of uniformity is not the same as the my notion. I spell this difference out explicitly in the next section.
 </p>
 <p>
 Adding some additional ad-hoc techniques to fill out the maze with branches from solution path generated using the biased random walk technique described above gives an algorithm that can produce an arbitrarily sized maze such as the one shown below.
@@ -1036,12 +1038,81 @@ End
 </div>
 </div>
 
+<h1>Notions of Uniformity in Maze Generation</h1>
+<hr>
+<p>
+In the following section I distinguish between the notion of uniformity used by Wilson in his algorithm for constructing spanning trees described in "Generating Random Spanning Trees More Quickly than the Cover Time" and the notion I use above. The brief explanation is that Wilson's notion of uniformity gives guarantees on the probability of a given spanning tree being selected from the set of possible spanning trees. As a maze without any loops or disconnected spaces is equivalent to a spanning tree, Wilson's algorithm gives guarantees on the probability of the generating a given maze using his algorithm. On the other hand the biased random walk algorithms above attempt to achieve an uniformity in the sense that the mazes solution path has equal probability of visiting each space in the counter diagonal of the maze; where this probability is less than one and the maze starts in the upper left corner and ends in the lower right. None of my algorithms achieve my notion of uniformity but I think they represent a step or two in that direction.
+</p>
+<h2>Wilson's Notion:</h2>
+<p>
+Wilson defines that weight of a spanning tree as follows "The weight of a spanning tree, with edges directed towards its root is the product of the weight of its edges". Since I am unconcerned here with directed graphs lets simplify Wilson's definition to simply the product of the weights of the trees edges. This definition is different from the more common definition of the weight of a spanning tree as the sum of the trees edge weights used in the definition of a minimum spanning tree (MST).
+</p>
+<p>
+Regardless, Wilson uses this definition of a spanning tree weight to define $\mathscr{Y}_r(G)$ as the probability distribution given graph $G$ of constructing a spanning tree rooted at node $r$ such that the probability of constructing a spanning tree is proportional to its weight. Whether heavy spanning trees are more or less likely in $\mathscr{Y}_r(G)$ is unclear. What is clear is that all the trees of equal weight have equal probability of being constructed under distribution $\mathscr{Y}_r(G)$. Therefore if on an $(n\times n)$ grid the weights of all possible paths between adjacent spaces in a maze are equal, all the spanning trees representing these possible mazes have equal weight, and all of these spanning trees are generated with the same probability. In this sense, Wilson's algorithm can be said to sample uniformly from the set of possible mazes on an $(n\times n)$ grid.
+</p>
+<h2>My Notion:</h2>
+<p>
+I defined my notion of uniformity in regards to a related by fundamentally different problem. The problem is related in so far as Wilson's algorithm constructs a maze and I initially thought my attempts to generate a random path solving the maze were equivalent problems. They are not.<br><br> 
+
+Yet knowing that Wilson's algorithm selected uniformly from the set of mazes, I initially thought the algorithm also selected uniformly from the set of paths solving the maze. However it is not clear that it does <b>(I need to test claim this in simulation)</b>. In fact my notion of constructing a random path solving the maze such that all spaces on the counter diagonal of a grid have equal probability of being visited is both fundamentally different then Wilson's notion of uniformity and is poorly defined.
+</p>
+<p>
+Lets take a stab at making my notion of uniformity in random path generation more rigorous. Given an $(n\times n)$ grid $G$ where $G(r,c)$ is the space in the $r_{th}$ row and $c_{th}$ column of $G$, $G(1,1)$ is the upper left space, and $G(n,n)$ the lower right. Define adjacency on the grid for space $G(r,c)$ as $G \bigcap \{G(r+1,c),G(r-1,c),G(r,c+1),G(r,c-1)\}$ the set of spaces vertically and horizontally adjacent to $G(r,c)$. Further define the set of spaces
+\begin{equation}
+\mathcal{D}_i := \{G(r,c)|r+c = i+1, 1\leq r \leq n, 1\leq c \leq n\}
+\end{equation}
+as the $i_{th}$ counter diagonal.
+</p>
+<p>
+This allows us to define the sets of equal probability spaces as
+\begin{equation}
+\mathcal{W}_j := \{G(r,c) | G(r,c)\in\mathcal{D}_i, |\mathcal{D}_i|=j, 1\leq j \leq n\}
+\end{equation}
+Now let k-tuple $\mathbf{r}$ be a path in $G$ consisting of adjacent spaces and define the following set 
+\begin{equation}
+\mathcal{U} := \{\mathbf{r} | i\neq j \iff \mathbf{r}(i) \neq \mathbf{r}(j), 1\leq i\leq k, 1\leq j\leq k \}
+\end{equation}
+as the paths in $$G without cycles. This set of non-cyclic paths can be reduced to the set of paths which start at $G(1,1)$ and end at $G(n,n)$ as
+\begin{equation}
+\mathcal{R} := \{\mathbf{r} | \mathbf{r}(1)=G(1,1), \mathbf{r}(k)=G(n,n), \mathbf{r} \in \mathcal{U}\}
+\end{equation}
+</p>
+<p>
+Given an algorithm $A(G)$ for generating a random path on $G$. Let $A(G)$ generate a valid collection $\mathfrak{R}$ of $q$ paths. Where validity is defined as
+\begin{equation}
+\mathbf{r} \in \mathfrak{R} \implies \mathbf{r} \in \mathcal{R}
+\end{equation}
+and using the set of paths $\mathfrak{R}$ generated with $A(G)$ let,
+\begin{equation}
+y_{r,c} = \sum_{\mathbf{r} \in \mathfrak{R}, G(x,y)\in\mathbf{r}} \mathbb{1}_{\bigg((x,y)=(r,c)\bigg)}
+\end{equation}
+where $\mathbb{1}_(\ast)$ is the indicator function. $y_{r,c}$ is the count of the number of times space $G(r,c)$ is visited by the paths in set $\mathfrak{R}$.
+</p>
+<p>
+Finally we can define my notion of random path generation as being uniform in the number of times paths in set $\mathfrak{R}$ visit spaces in set $\mathcal{W}_j$ of equal probable spaces along counter diagonals of length $j$ as being satisfied if for any $j$ and any $y_{r,c}\in\mathcal{W}_j$ and $y_{x,y}\in\mathcal{W}_j$,
+\begin{equation}
+y_{r,c} \approx y_{x,y}
+\end{equation}
+or more formally for arbitrary number $\epsilon > 0$,
+\begin{equation}
+\lim_{q\to\infty} Pr(|y_{r,c}-y_{x,y}| > \epsilon) =0
+\end{equation}
+in other words algorithm $A(G)$ is uniform in the probability of its paths visiting a space in $G$'s counter diagonals if $y_{r,c}$ and $y_{x,y}$ converge in probability.
+</p>
+<p>
+Now as defined above $\mathfrak{R}$ does not necessarily cover all elements of $\mathcal{R}$. For this to be the case algorithm $A(G)$ must generate a valid collection $\mathfrak{R}'$ of $q$ paths. Where validity is defined as
+\begin{equation}
+\mathbf{r} \in \mathfrak{R} \iff \mathbf{r} \in \mathcal{R}
+\end{equation}
+Substituting $\mathfrak{R}'$ for $\mathfrak{R}$ above the rest of the argument is exactly the same as above.
+</p>
 <hr>
 <p>
 <b>Sources:</b><br>
 $^{(1)}$ <a href="https://en.wikipedia.org/wiki/Spanning_tree">https://en.wikipedia.org/wiki/Spanning_tree</a><br>
 $^{(2)}$ <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm">https://en.wikipedia.org/wiki/Maze_generation_algorithm</a><br>
-$^{(3)}$<a href="http://www.astrolog.org/labyrnth/algrithm.htm">http://www.astrolog.org/labyrnth/algrithm.htm</a><br>
+$^{(3)}$ <a href="http://www.astrolog.org/labyrnth/algrithm.htm">http://www.astrolog.org/labyrnth/algrithm.htm</a><br>
+$^{(4)}$ "Generating Random Spanning Trees More Quickly than the Cover Time" by David Wilson<br>
 </p>
 <hr>
 <div class="hspacer"></div>
@@ -2165,7 +2236,7 @@ Now lets compare this for the case of a simple random walk shown in the figures 
 <img class="heatmap_l" src="images/maze/All_simple_uniform.png">
 <img class="heatmap_r" src="images/maze/cnt_simple_uniform.png">
 </div>
-Clearly the edge spaces are visited much less frequently in the figure on the left using a simple random walk then the inner spaces. This phenomenon is also somewhat apparent on the right.
+Clearly the edge spaces are visited much less frequently in the figure on the left using a simple random walk than the inner spaces. This phenomenon is also somewhat apparent on the right.
 <br><br>
 
 <hr><br>

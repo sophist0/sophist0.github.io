@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>Game Theory - Notes</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div class="hspacer"></div>
+<div class="content_block">
+<h1>Game Theory - Notes</h1>
+<hr>
+<p>
+Instead of doing productive things I've been reading <u>Games and Decisions</u> by Duncan Luce. I like the fact that it covers all the arguments against the normative assumptions of game theory although having to look in the appendix's for the formal statements of theories is a pain. Still it inspired this simplified model of renters and homeowners as a zero-sum game.
+</p>
+
+<h3>Players</h3>
+<ul>
+<li>Renters (R)</li>
+<li>Homeowners (H)</li>
+</ul>
+
+<h3>Moves</h3>
+<ul>
+<li>Develop high end apartments (HIGH)</li>
+<li>Develop low end apartments (LOW)</li>
+<li>Develop no apartments (NO)</li>
+</ul>
+
+<h3>Payout for renters</h3>
+<ul>
+<li>High income apartments built: 1</li>
+<li>Low income apartments built: 2</li>
+<li>No income apartments built: 0</li>
+</ul>
+<p>
+This assignment of payouts is arbitrary. However I think its broadly justifiable, since anytime apartments are built it should increase the supply of apartments and decrease there cost, and more renters can afford low end than high end apartments.
+</p>
+<p>
+Lets also assume that the only political players in the city are renters and home owners. The political power of renters is $r$, the political power of the home owners is $l$, and the total political power in the city is 
+$$
+c=r+l
+$$
+</p>
+<p>
+Now assume that the actual payout achieved by the renters is a function of the political power put behind a give move, so if both renters and home owners decide to build high end apartments the renters payout is $1*c$. This gives the full payout matrix as
+<table>
+	<tr>
+		<th></th>
+		<th></th>
+		<th>(L)</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<tr>
+		<th></th>
+		<th></th>
+		<th>HIGH</th>
+		<th>LOW</th>
+		<th>NO</th>
+	</tr>
+	<tr>
+		<th></th>
+		<th>HIGH</th>
+		<th>$1c$</th>
+		<th>$1r+2l$</th>
+		<th>$1r+0l$</th>
+	</tr>
+	<tr>
+		<th>(R)</th>
+		<th>LOW</th>
+		<th>2r+1l</th>
+		<th>2c</th>
+		<th>2r+0r</th>
+	</tr>
+	<tr>
+		<th></th>
+		<th>NO</th>
+		<th>0r+1l</th>
+		<th>0r+2l</th>
+		<th>0c</th>
+	</tr>
+</table>
+which simplifies to
+<table>
+	<tr>
+		<th></th>
+		<th></th>
+		<th>(L)</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<tr>
+		<th></th>
+		<th></th>
+		<th>HIGH</th>
+		<th>LOW</th>
+		<th>NO</th>
+	</tr>
+	<tr>
+		<th></th>
+		<th>HIGH</th>
+		<th>$c$</th>
+		<th>$r+2l$</th>
+		<th>$r$</th>
+	</tr>
+	<tr>
+		<th>(R)</th>
+		<th>LOW</th>
+		<th>2r+l</th>
+		<th>2c</th>
+		<th>2r</th>
+	</tr>
+	<tr>
+		<th></th>
+		<th>NO</th>
+		<th>l</th>
+		<th>2l</th>
+		<th>0</th>
+	</tr>
+</table>
+</p>
+<p>
+Now given $c=l+r$ it follows that $c\geq r$ and $c \geq l$, it follows that the equilibrium point is (R) choosing LOW and (L) choosing No.
+</p>
+<p>
+<u>Takeaways:</u>
+<ul>
+	<li>In equilibrium renters always go for low income housing and maximize $r$</li>
+	<li>In equilibrium homeowners always go for no development and minimize $r$</li>
+</ul>
+Basically I was surprised how well this simple model captures the real world dynamics, even if that surprise ignores a bit of circular reasoning.
+</p>
+</div>
+</body>
+</html>

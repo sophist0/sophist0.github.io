@@ -2,7 +2,7 @@
 <head>
 <title>Data Exploration and XGBoost - Notes</title>
 <link rel="stylesheet" type="text/css" href="styles.css">
-<link rel="stylesheet" type="text/css" href="game_theory.css">
+<link rel="stylesheet" type="text/css" href="xgboost.css">
 <script>
 MathJax = {
   tex: {
@@ -18,13 +18,127 @@ MathJax = {
 <div class="hspacer"></div>
 <div class="content_block">
 <h1>Introduction</h1>
-XGBoost is one of the ML models that I've run across a lot but never actually tried. So this is my attempt at getting familiar with the python implementation of XGBoost. Basically this involved following the docs here https://xgboost.readthedocs.io/en/latest/
+<hr>
+XGBoost is one of the ML models that I've run across a lot but never played around with. So this is my attempt at getting familiar with the python implementation of XGBoost. Basically this involved following the docs here: <a href="https://xgboost.readthedocs.io/en/latest/"> https://xgboost.readthedocs.io/en/latest/</a>
 
 <h1>Data Exploration</h1>
 <hr>
 <p>
-body content
+I'm interested in cooking. So I decided to look for a dataset of recipes and found <a href="https://www.kaggle.com/kaggle/recipe-ingredients-dataset">https://www.kaggle.com/kaggle/recipe-ingredients-dataset</a>. 
 </p>
+<p>
+This dataset consists of recipes classified by cuisine with the recipe ingredients as features. Specifically the dataset consists of 39774 recipes, 20 cuisines, and 6714 unique ingredients. Arguably this dataset could use cleaning in the sense that some features could be consolidated for instance "olive oil" and "extra-virgin olive oil", on the other hand different cuisines may use different words for identical or substitutable ingredients. I chose not to consolidate any features. 
+</p>
+<p>
+The cuisines and there frequency are given in the figure below.
+<img class="img_cnr" src="images/cuisine_num_recipes_edit.png">
+</p>
+<p>
+The twenty most frequent ingredients in all cuisine recipes are given in the figure below.
+<img class="img_cnr" src="images/ingredient_num_recipes_edit.png">
+</p>
+<p>
+Eight most frequent ingredients of each cuisine which are not in the set of the eight most frequent ingredients of any other cuisine.
+<br>
+<br>
+<table class="center">
+  <tr>
+    <th><b>Cuisine</b></th>
+    <th><b>Ingredients</b></th>
+  </tr>
+  <tr>
+    <td>brazilian</td>
+    <td>cachaca, lime</td>
+  </tr>
+  <tr>
+    <td>british</td>
+    <td>milk</td>
+  </tr>
+  <tr>
+    <td>cajun_creole</td>
+    <td>cajun seasoning, cayenne pepper, green bell pepper</td>
+  </tr>
+  <tr>
+    <td>chinese</td>
+    <td>corn starch</td>
+  </tr>
+  <tr>
+    <td>filipino</td>
+    <td>oil</td>
+  </tr>
+  <tr>
+    <td>french</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>greek</td>
+    <td>fresh lemon juice, feta cheese crumbles, dried oregano</td>
+  </tr>
+  <tr>
+    <td>indian</td>
+    <td>cumin seed, ground turmeric, garam masala</td>
+  </tr>
+  <tr>
+    <td>irish</td>
+    <td>baking soda, potatoes</td>
+  </tr>
+  <tr>
+    <td>italian</td>
+    <td>grated parmesan cheese</td>
+  </tr>
+  <tr>
+    <td>jamaican</td>
+    <td>dried thyme, scallions, ground allspice</td>
+  </tr>
+  <tr>
+    <td>japanese</td>
+    <td>rice vinegar, sake, mirin</td>
+  </tr>
+  <tr>
+    <td>korean</td>
+    <td>seseme seeds</td>
+  </tr>
+  <tr>
+    <td>mexican</td>
+    <td>jalapeno chilies, chili powder</td>
+  </tr>
+  <tr>
+    <td>moroccan</td>
+    <td>ground ginger, ground cinnamon</td>
+  </tr>
+  <tr>
+    <td>russian</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>southern_us</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>spanish</td>
+    <td>tomatoes</td>
+  </tr>
+  <tr>
+    <td>thai</td>
+    <td>coconut milk</td>
+  </tr>
+  <tr>
+    <td>vietnamese</td>
+    <td>shallots, carrots</td>
+  </tr>
+</table> 
+<br>
+If one fills in this table for the thirty most frequent ingredients rather than the eight, then every cuisine has ingredients in the second column. But as we will see the eight most frequent elements produce nicer graphical representations. But the take away is that if we only used the thirty most frequent ingredients of each cuisine we should be able to easily categorize a lot of recipes. In other words classifying recipes according to cuisine by its ingredients appears to be a solvable problem. 
+</p>
+<p>
+Below is a bipartite graph representation of subsets of the eight most frequent ingredients for each cuisine. The white nodes are the cuisines, the edges to blue nodes which are subsets of ingredients represent ingredients in that cuisines eight most frequent. If there is more than one edge to a blue node, that nodes ingredients are in the set of the eight most frequent ingredients for each connected cuisine. For instance both Chinese and Korean recipes frequently use green onions and sesame oil.
+<img class="img_cnr" src="images/cuisine_ingredients_n8.png">
+<br>
+Notice that the ingredients in the center of the graph such as garlic, onions, salt, sugar, and water are connected to most cuisines. Therefore their presence in a recipe likely tells us little about the recipes cuisine. Or more formally if all ingredient nodes represent sufficiently frequent ingredients the highest degree nodes in the bipartite representation above likely have little power to classify recipes by cuisine. I hope to test this hypothesis below.
+</p>
+
+<h1>XGBoost Paramater Selection</h1>
+<hr>
 
 </div>
 </body>

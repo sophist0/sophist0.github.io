@@ -27,18 +27,22 @@ XGBoost is one of the ML models that I've run across a lot but never played arou
 I'm interested in cooking. So I decided to look for a dataset of recipes and found <a href="https://www.kaggle.com/kaggle/recipe-ingredients-dataset">https://www.kaggle.com/kaggle/recipe-ingredients-dataset</a>. 
 </p>
 <p>
-This dataset consists of recipes classified by cuisine with the recipe ingredients as features. Specifically the dataset consists of 39774 recipes, 20 cuisines, and 6714 unique ingredients. Arguably this dataset could use cleaning in the sense that some features could be consolidated for instance "olive oil" and "extra-virgin olive oil", on the other hand different cuisines may use different words for identical or substitutable ingredients. I chose not to consolidate any features. 
+This dataset consists of recipes classified by cuisine with the recipe ingredients as features. Specifically the datasets training set consists of 39774 recipes, 20 cuisines, and 6714 unique ingredients. Arguably this dataset could use cleaning in the sense that some features could be consolidated for instance "olive oil" and "extra-virgin olive oil", on the other hand different cuisines may use different words for identical or substitutable ingredients. I chose not to consolidate any features. 
 </p>
 <p>
-The cuisines and there frequency are given in the figure below.
+The cuisines and their frequency in the training set are given in the figure below.
 <img class="img_cnr" src="images/cuisine_num_recipes_edit.png">
 </p>
 <p>
-The twenty most frequent ingredients in all cuisine recipes are given in the figure below.
+The twenty most frequent ingredients in all cuisine recipes in the training set are given in the figure below.
 <img class="img_cnr" src="images/ingredient_num_recipes_edit.png">
 </p>
 <p>
-Eight most frequent ingredients of each cuisine which are not in the set of the eight most frequent ingredients of any other cuisine.
+<b>Add stats about the testing set</b>
+Number of recipes, number of cuisines, number of ingredients, cuisines in test set that are not in the training set, ingredients in the test set that are not in the training set.
+</p>
+<p>
+Eight most frequent ingredients of each cuisine which are not in the set of the eight most frequent ingredients of any other cuisine in the training set is given below.
 <br>
 <br>
 <table class="center">
@@ -128,13 +132,13 @@ Eight most frequent ingredients of each cuisine which are not in the set of the 
   </tr>
 </table> 
 <br>
-If one fills in this table for the thirty most frequent ingredients rather than the eight, then every cuisine has ingredients in the second column. But as we will see the eight most frequent elements produce nicer graphical representations. But the take away is that if we only used the thirty most frequent ingredients of each cuisine we should be able to easily categorize a lot of recipes. In other words classifying recipes according to cuisine by its ingredients appears to be a solvable problem. 
+If one fills in this table for the thirty most frequent ingredients rather than the eight, then every cuisine has ingredients in the second column. But as we will see the eight most frequent elements produce nicer graphical representation. But the take away is that if we only used the thirty most frequent ingredients of each cuisine we should be able to easily categorize a lot of recipes. In other words classifying recipes according to cuisine using their ingredients appears to be a solvable problem. 
 </p>
 <p>
-Below is a bipartite graph representation of subsets of the eight most frequent ingredients for each cuisine. The white nodes are the cuisines, the edges to blue nodes which are subsets of ingredients represent ingredients in that cuisines eight most frequent. If there is more than one edge to a blue node, that nodes ingredients are in the set of the eight most frequent ingredients for each connected cuisine. For instance both Chinese and Korean recipes frequently use green onions and sesame oil.
+Below is a bipartite graph representation of subsets of the eight most frequent ingredients for each cuisine. The white nodes are the cuisines, the edges to blue nodes are subsets of that cuisines eight most frequent ingredients. If there is more than one edge to a blue node, that nodes ingredients are in the set of the eight most frequent ingredients for each connected cuisine. For instance both Chinese and Korean recipes frequently use green onions and sesame oil.
 <img class="img_cnr" src="images/cuisine_ingredients_n8.png">
 <br>
-Notice that the ingredients in the center of the graph such as garlic, onions, salt, sugar, and water are connected to most cuisines. Therefore their presence in a recipe likely tells us little about the recipes cuisine. Or more formally if all ingredient nodes represent sufficiently frequent ingredients the highest degree nodes in the bipartite representation above likely have little power to classify recipes by cuisine. I hope to test this hypothesis below.
+Notice that the ingredients in the center of the graph such as garlic, onions, salt, sugar, and water are connected to most cuisines. Therefore their presence in a recipe likely tells us little about the recipes cuisine. Or more formally if all ingredient nodes represent sufficiently frequent ingredients, then highest degree nodes in the bipartite representation above likely have little power to classify recipes by cuisine. I hope to test this hypothesis below.
 </p>
 
 <h1>XGBoost Paramater Selection</h1>

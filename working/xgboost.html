@@ -19,7 +19,9 @@ MathJax = {
 <div class="content_block">
 <h1>Introduction</h1>
 <hr>
+<p>
 XGBoost is one of the ML models that I've run across a lot but never played around with. So this is my attempt at getting familiar with the python implementation of XGBoost. Basically this involved following the docs here: <a href="https://xgboost.readthedocs.io/en/latest/"> https://xgboost.readthedocs.io/en/latest/</a>
+</p>
 
 <h1>Data Exploration</h1>
 <hr>
@@ -27,22 +29,18 @@ XGBoost is one of the ML models that I've run across a lot but never played arou
 I'm interested in cooking. So I decided to look for a dataset of recipes and found <a href="https://www.kaggle.com/kaggle/recipe-ingredients-dataset">https://www.kaggle.com/kaggle/recipe-ingredients-dataset</a>. 
 </p>
 <p>
-This dataset consists of recipes classified by cuisine with the recipe ingredients as features. Specifically the datasets training set consists of 39774 recipes, 20 cuisines, and 6714 unique ingredients. Arguably this dataset could use cleaning in the sense that some features could be consolidated for instance "olive oil" and "extra-virgin olive oil", on the other hand different cuisines may use different words for identical or substitutable ingredients. I chose not to consolidate any features. 
+This dataset consists of recipes classified by cuisine with the recipe ingredients as features. Specifically the dataset consists of 39774 recipes, 20 cuisines, and 6714 unique ingredients. Arguably this dataset could use cleaning in the sense that some features could be consolidated for instance "olive oil" and "extra-virgin olive oil", on the other hand different cuisines may use different words for identical or substitutable ingredients. I chose not to consolidate any features. 
 </p>
 <p>
-The cuisines and their frequency in the training set are given in the figure below.
+The cuisines and their frequency in the dataset are given in the figure below.
 <img class="img_cnr" src="images/cuisine_num_recipes_edit.png">
 </p>
 <p>
-The twenty most frequent ingredients in all cuisine recipes in the training set are given in the figure below.
+The twenty most frequent ingredients in all cuisine recipes in the dataset are given in the figure below.
 <img class="img_cnr" src="images/ingredient_num_recipes_edit.png">
 </p>
 <p>
-<b>Add stats about the testing set</b>
-Number of recipes, number of cuisines, number of ingredients, cuisines in test set that are not in the training set, ingredients in the test set that are not in the training set.
-</p>
-<p>
-Eight most frequent ingredients of each cuisine which are not in the set of the eight most frequent ingredients of any other cuisine in the training set is given below.
+Eight most frequent ingredients of each cuisine which are not in the set of the eight most frequent ingredients of any other cuisine in the dataset are given below.
 <br>
 <br>
 <table class="center">
@@ -132,7 +130,7 @@ Eight most frequent ingredients of each cuisine which are not in the set of the 
   </tr>
 </table> 
 <br>
-If one fills in this table for the thirty most frequent ingredients rather than the eight, then every cuisine has ingredients in the second column. But as we will see the eight most frequent elements produce nicer graphical representation. But the take away is that if we only used the thirty most frequent ingredients of each cuisine we should be able to easily categorize a lot of recipes. In other words classifying recipes according to cuisine using their ingredients appears to be a solvable problem. 
+If one fills in this table for the thirty most frequent ingredients rather than the eight, then every cuisine has ingredients in the column of ingredients. As we will see the eight most frequent elements produce nicer graphical representation. But the point I'm trying to drive home is that if we only used the thirty most frequent ingredients of each cuisine we should be able to categorize a lot of recipes. In other words classifying recipes according to cuisine using their ingredients appears to be a solvable problem. 
 </p>
 <p>
 Below is a bipartite graph representation of subsets of the eight most frequent ingredients for each cuisine. The white nodes are the cuisines, the edges to blue nodes are subsets of that cuisines eight most frequent ingredients. If there is more than one edge to a blue node, that nodes ingredients are in the set of the eight most frequent ingredients for each connected cuisine. For instance both Chinese and Korean recipes frequently use green onions and sesame oil.
@@ -143,7 +141,61 @@ Notice that the ingredients in the center of the graph such as garlic, onions, s
 
 <h1>XGBoost Paramater Selection</h1>
 <hr>
+<p>
+XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/latest/parameter.html">https://xgboost.readthedocs.io/en/latest/parameter.html</a>. I chose to focus on the following.
 
+<table class="center">
+  <tr>
+    <th><b>Parameter</b></th>
+    <th><b>Description</b></th>
+    <th><b>Range</b></th>
+    <th><b>Default</b></th>
+    <th><b>Sweep Values</b></th>
+  </tr>
+  <tr>
+    <td>eta</td>
+    <td>learning rate</td>
+    <td>[0,1]</td>
+    <td>0.3</td>
+    <td>0.1,0.5,1</td>
+  </tr>
+  <tr>
+    <td>gamma</td>
+    <td>min leaf loss to split a leaf</td>
+    <td>[0,inf]</td>
+    <td>0</td>
+    <td>0,0.3</td>
+  </tr>
+  <tr>
+    <td>max_depth</td>
+    <td>maximum tree depth</td>
+    <td>[0,inf]</td>
+    <td>6</td>
+    <td>2,4,6</td>
+  </tr>
+  <tr>
+    <td>lambda</td>
+    <td>L2 regulation</td>
+    <td></td>
+    <td>1</td>
+    <td>0,1,3</td>
+  </tr>
+  <tr>
+    <td>subsample</td>
+    <td>fraction of data sampled before growing each tree</td>
+    <td>(0,1]</td>
+    <td>1</td>
+    <td>0.7,1</td>
+  </tr>
+  <tr>
+    <td>num_round</td>
+    <td>number of boosting rounds usually 2</td>
+    <td></td>
+    <td></td>
+    <td>2,4</td>
+  </tr>
+</table>
+</p>
 </div>
 </body>
 </html>

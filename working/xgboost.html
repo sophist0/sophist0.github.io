@@ -142,8 +142,8 @@ Notice that the ingredients in the center of the graph such as garlic, onions, s
 <h1>XGBoost Paramater Selection</h1>
 <hr>
 <p>
-XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/latest/parameter.html">https://xgboost.readthedocs.io/en/latest/parameter.html</a>. I chose to focus on the following.
-
+XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/latest/parameter.html">https://xgboost.readthedocs.io/en/latest/parameter.html</a>. I chose to focus on sweeping over the following parameters which produces 216 potential models.
+<br><br>
 <table class="center">
   <tr>
     <th><b>Parameter</b></th>
@@ -195,6 +195,137 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
     <td>2,4</td>
   </tr>
 </table>
+<br><br>
+<b>Preliminary</b> The top ten accuracies and the corresponding parameter sets are given in the table below.
+<br><br>
+<table class="center">
+  <tr>
+    <td>Accuracy</td>
+    <td>0.655</td>
+    <td>0.654</td>
+    <td>0.652</td>
+    <td>0.652</td>
+    <td>0.649</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>eta</td>
+    <td>0.5</td>
+    <td>0.5</td>
+    <td>0.5</td>
+    <td>0.5</td>
+    <td>0.5</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>gamma</td>
+    <td>0.3</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0.3</td>
+    <td>0.3</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>max_depth</td>
+    <td>6</td>
+    <td>6</td>
+    <td>6</td>
+    <td>6</td>
+    <td>6</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>lambda</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>subsample</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0.7</td>
+    <td>0.7</td>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>num_round</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<br><br>
+<b>Add analysis of which parameter are useful and which are not. Should I do another round of parameters fitting?</b>
+</p>
+
+<h1>Test Models</h1>
+<hr>
+<p>
+<b>Select 4 parameter sets</b><br><br>
+<b>Give accuracy results for each, how good are these relative to the Kaggle results?</b><br><br>
+<b>Plot confusion matrix for the best</b><br><br>
+<b>Plot ROC curves for each</b>
+</p>
+<h1>Feature Selection</h1>
+<hr>
+<p>
+<b>For "best" parameter set using all features</b><br><br>
+<b>Compare the following:</b><br><br>
+<b>Full feature set</b><br><br>
+<b>Feature set of the 50 most frequent ingredients for each cuisine (*)</b><br><br>
+<b>delete nodes within 5% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 10% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 15% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 20% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 25% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 30% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 35% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 40% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 45% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 50% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 55% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 60% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 65% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>delete nodes within 70% of max degree ingredient node in set defined in (*)</b><br><br>
+<b>Also notice what fraction of ingredients remain at the above points.<b>
+<b>Try comparing highest degree nodes to nodes with ingredients with high cross entropy??<b>
 </p>
 </div>
 </body>

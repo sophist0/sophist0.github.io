@@ -150,7 +150,7 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
     <th><b>Description</b></th>
     <th><b>Range</b></th>
     <th><b>Default</b></th>
-    <th><b>Sweep Values</b></th>
+    <th><b>Sweep 1 Values</b></th>
   </tr>
   <tr>
     <td>eta</td>
@@ -195,22 +195,22 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
     <td>2,4</td>
   </tr>
 </table>
-<br><br>
-<b>Preliminary</b> The top ten accuracies and the corresponding parameter sets are given in the table below.
+<br>
+Setting aside 10% of the dataset as a testing set and using 5-fold cross validation, the top ten average accuracies and the corresponding parameter sets are given in the table below.
 <br><br>
 <table class="center">
   <tr>
     <td>Accuracy</td>
-    <td>0.655</td>
-    <td>0.654</td>
-    <td>0.652</td>
-    <td>0.652</td>
-    <td>0.649</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>0.653</td>
+    <td>0.653</td>
+    <td>0.648</td>
+    <td>0.648</td>
+    <td>0.647</td>
+    <td>0.646</td>
+    <td>0.641</td>
+    <td>0.641</td>
+    <td>0.635</td>
+    <td>0.634</td>
   </tr>
   <tr>
     <td>eta</td>
@@ -219,24 +219,24 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
     <td>0.5</td>
     <td>0.5</td>
     <td>0.5</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>0.5</td>
+    <td>0.5</td>
+    <td>0.5</td>
+    <td>0.5</td>
+    <td>0.5</td>
   </tr>
   <tr>
     <td>gamma</td>
-    <td>0.3</td>
-    <td>0</td>
     <td>0</td>
     <td>0.3</td>
+    <td>0</td>
     <td>0.3</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>0</td>
+    <td>0.3</td>
+    <td>0</td>
+    <td>0.3</td>
+    <td>0</td>
+    <td>0.3</td>
   </tr>
   <tr>
     <td>max_depth</td>
@@ -245,11 +245,11 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
     <td>6</td>
     <td>6</td>
     <td>6</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>6</td>
+    <td>6</td>
+    <td>6</td>
+    <td>6</td>
+    <td>6</td>
   </tr>
   <tr>
     <td>lambda</td>
@@ -258,11 +258,11 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
     <td>0</td>
     <td>0</td>
     <td>1</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+    <td>3</td>
+    <td>3</td>
   </tr>
   <tr>
     <td>subsample</td>
@@ -271,28 +271,62 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
     <td>0.7</td>
     <td>0.7</td>
     <td>1</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>1</td>
+    <td>0.7</td>
+    <td>0.7</td>
+    <td>1</td>
+    <td>1</td>
   </tr>
   <tr>
     <td>num_round</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
+    <td>4</td>
   </tr>
 </table>
+</p>
+<p>
+Given this parameter sweep it appears we can fix eta=0.5 and it doesn't appear gamma has a large effect so lets fix gamma=0. Its also tempting to set lambda=0 and subsample=1 but I'm not going to fix those values as both parameters are attempts at avoiding over fitting. Finally the fact that max_depth and num_round are at the maximum of their swept ranges suggest that they should both be increased and that the model is under fitting the validation data. So lets try another round of parameter fitting sweeping over the following values.
 <br><br>
-<b>Add analysis of which parameter are useful and which are not. Should I do another round of parameters fitting?</b>
+<table class="center">
+  <tr>
+    <th><b>Parameter</b></th>
+    <th><b>Sweep 2 Values</b></th>
+  </tr>
+  <tr>
+    <td>eta</td>
+    <td>0.5</td>
+  </tr>
+  <tr>
+    <td>gamma</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>max_depth</td>
+    <td>8,10,12,14</td>
+  </tr>
+  <tr>
+    <td>lambda</td>
+    <td>0,1</td>
+  </tr>
+  <tr>
+    <td>subsample</td>
+    <td>0.7,1</td>
+  </tr>
+  <tr>
+    <td>num_round</td>
+    <td>6,8,10,12</td>
+  </tr>
+</table>
+<br>
+This gives 64 possible models.
 </p>
 
 <h1>Test Models</h1>
@@ -325,7 +359,7 @@ XGBoost has a lot of parameters, see <a href="https://xgboost.readthedocs.io/en/
 <b>delete nodes within 65% of max degree ingredient node in set defined in (*)</b><br><br>
 <b>delete nodes within 70% of max degree ingredient node in set defined in (*)</b><br><br>
 <b>Also notice what fraction of ingredients remain at the above points.<b>
-<b>Try comparing highest degree nodes to nodes with ingredients with high cross entropy??<b>
+<b>Try comparing highest degree nodes to nodes with ingredients with high mutual information??<b>
 </p>
 </div>
 </body>

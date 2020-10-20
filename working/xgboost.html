@@ -973,7 +973,7 @@ The confusion matrix for model S2M1 is
 <br>
 Glancing at the confusion matrix it is apparent that this model often incorrectly predicts geek cuisine is italian, spanish cuisine is italian, british cuisine is southern_us, irish is southern_us, and russian cuisine is italian.
 <br><br> 
-The ROC's for all four models are vary similar as show below.
+The ROC's for all four models are vary similar as show below. These ROC's where calculated by collapsing the multi-class problem into a binary problem. So in computing the ROC for the class 'italian' a true positive is any recipe correctly labeled as 'italian' and a false positive any recipe incorrectly labeled as 'italian'. I then averaged the ROC's for each class to produce the figure below. Arguably I should have weighted the ROC's according to the number of samples of each class in the dataset before averaging them together. This may explain why model S2M4 appears to dominate the others in much of the ROC space although it is less accurate.
 <img class="img_cnr" src="images/rocs.png">
 </p>
 <h1>Feature Selection</h1>

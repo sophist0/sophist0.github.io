@@ -976,30 +976,6 @@ Glancing at the confusion matrix it is apparent that this model often incorrectl
 The ROC's for all four models are vary similar as demonstrated in the figure below. These ROC's where calculated by collapsing the multi-class problem into a binary problem. So for example in computing the ROC for the class 'italian' a true positive is any recipe correctly labeled as 'italian' and a false positive any recipe incorrectly labeled as 'italian'. I then averaged the ROC's for each class to produce the figure below. Arguably I should have weighted the ROC's according to the number of samples of each class in the dataset before averaging them together. This may explain why model S2M4 appears to dominate the others in much of the ROC space although it is a less accurate model.
 <img class="img_cnr" src="images/rocs.png">
 </p>
-<h1>Feature Selection</h1>
-<hr>
-<p>
-<b>For "best" parameter set using all features</b><br><br>
-<b>Compare the following:</b><br><br>
-<b>Full feature set</b><br><br>
-<b>Feature set of the 50 most frequent ingredients for each cuisine (*)</b><br><br>
-<b>delete nodes within 5% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 10% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 15% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 20% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 25% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 30% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 35% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 40% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 45% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 50% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 55% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 60% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 65% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 70% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>Also notice what fraction of ingredients remain at the above points.<b>
-<b>Try comparing highest degree nodes to nodes with ingredients with high mutual information??<b>
-</p>
 </div>
 </body>
 </html>

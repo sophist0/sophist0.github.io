@@ -1,0 +1,17 @@
+table, th, td {
+	border: 1px solid black;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.center{
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.img_cnr{
+	/* border: 3px solid black; */
+	width: 100%;
+}
+

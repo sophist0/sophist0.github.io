@@ -4,11 +4,50 @@ table, th, td {
 	margin-right: auto;
 }
 
+.no_b{
+	border-width: 0px;
+}
+
+.no_bl{
+	border-left-width: 0px;
+}
+
+.no_bb{
+	border-bottom-width: 0px;
+}
+
+
+.no_blt{
+	border-left-width: 0px;
+	border-top-width: 0px;
+}
+
+.no_blbt{
+	border-left-width: 0px;
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+}
+
+
+.no_brbt{
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+}
+
+
 .center{
 	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.table_label{
+	width: 73%;
+	margin-left: auto;
+	text-align: center;
+}
+
 
 .img_cnr{
 	/* border: 3px solid black; */

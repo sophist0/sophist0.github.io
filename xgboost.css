@@ -4,6 +4,10 @@ table, th, td {
 	margin-right: auto;
 }
 
+.no_bl{
+	border-left-style: none;
+}
+
 .center{
 	width: 70%;
 	margin-left: auto;

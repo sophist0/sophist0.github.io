@@ -980,26 +980,14 @@ The ROC's for all four models are vary similar as demonstrated in the figure bel
 <h1>Feature Selection</h1>
 <hr>
 <p>
-<b>For "best" parameter set using all features</b><br><br>
-<b>Compare the following:</b><br><br>
-<b>Full feature set</b><br><br>
-<b>Feature set of the 50 most frequent ingredients for each cuisine (*)</b><br><br>
-<b>delete nodes within 5% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 10% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 15% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 20% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 25% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 30% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 35% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 40% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 45% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 50% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 55% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 60% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 65% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>delete nodes within 70% of max degree ingredient node in set defined in (*)</b><br><br>
-<b>Also notice what fraction of ingredients remain at the above points.<b>
-<b>Try comparing highest degree nodes to nodes with ingredients with high mutual information??<b>
+Looking at the bipartite graph above I thought perhaps ingredients in most cuisines could be ignored without reducing classification power. I decided to test this and found given the figure below that I was only partially correct.
+</p>
+<img class="img_cnr" src="images/fselect.png">
+<p>
+In this figure the blue line (#) represents the accuracy of model S2M1 predicting the cuisine of recipes using the most frequent ingredients in the dataset, the orange line ($) is the n most frequent ingredients in each cuisine, the green line (&) is the ingredients in the fewest cuisines that are in the set of the 100 most frequent ingredients of a cuisine, the red line (*) is the ingredients in the most cuisines that are in the set of the 100 most frequent ingredients of a cuisine.
+</p>
+<p>
+Interestingly the orange (\$) line is strictly greater than the blue (#) line, suggesting its always better to select the most frequent n ingredients of each cuisine rather than the most frequent ingredients in the dataset. The green (&) and red (*) lines swept the fraction of ingredients selected from the orange (\$) line for n=100 from 0.05 to 1 in increments of 0.05. This implies that all three lines should converge at the right side of the graph, however there must be a bit of randomness in the model's training as this does not quite occur. But the real take away is that if the ingredients shared across the most cuisines are removed, initially it does not effect the models accuracy. So for instance perhaps removing water, which is an ingredient in all 20 cuisines, would not reduce the models accuracy. However this does not last long and as more ingredients are removed which are in many cuisine's, the models accuracy decreases substantially even falling below the red (*) line. Perhaps this is due to ingredients that are shared across a lot of cuisines being frequent ingredients, such that if 50% of them are removed a lot of recipes will have no ingredients making them impossible to classify. I have not verified this, its just a guess.
 </p>
 </div>
 </body>

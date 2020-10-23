@@ -479,13 +479,14 @@ The testing set I used here is not the same as the one used in the Kaggle compet
 <p>
 The confusion matrix for model S2M1 is
 <br><br>
-<table>
+<table class="no_b">
 	<tr>
-		<td colspan="22" style="text-align:center"><b>Predicted Label</b></td>
+		<!-- <td class="no_b" colspan="22" style="text-align:center"><b>Predicted Label</b></td> --!>
+		<td class="no_b" colspan="22"><div class="table_label"><b>Predicted Label</b></div></td>
 	</tr>
 	<tr>
-		<td></td>
-		<td></td>
+		<td class="no_b"></td>
+		<td class="no_blt"></td>
 		<td>gr</td>
 		<td>so</td>
 		<td>fi</td>
@@ -508,7 +509,7 @@ The confusion matrix for model S2M1 is
 		<td>ru</td>
 	</tr>
 	<tr>
-		<td rowspan="20"><b>Label</b></td>
+		<td class="no_blbt" rowspan="20"><b>Label</b></td>
 		<td>greek (gr)</td>
 		<td><b>56</b></td>
 		<td>4</td>
@@ -975,6 +976,18 @@ Glancing at the confusion matrix it is apparent that this model often incorrectl
 <br><br> 
 The ROC's for all four models are vary similar as demonstrated in the figure below. These ROC's where calculated by collapsing the multi-class problem into a binary problem. So for example in computing the ROC for the class 'italian' a true positive is any recipe correctly labeled as 'italian' and a false positive any recipe incorrectly labeled as 'italian'. I then averaged the ROC's for each class to produce the figure below. Arguably I should have weighted the ROC's according to the number of samples of each class in the dataset before averaging them together. This may explain why model S2M4 appears to dominate the others in much of the ROC space although it is a less accurate model.
 <img class="img_cnr" src="images/rocs.png">
+</p>
+<h1>Feature Selection</h1>
+<hr>
+<p>
+Looking at the bipartite graph above I thought perhaps ingredients in most cuisines could be ignored without reducing classification power. I decided to test this and found given the figure below that I was only partially correct.
+</p>
+<img class="img_cnr" src="images/fselect.png">
+<p>
+In this figure the blue line (#) represents the accuracy of model S2M1 predicting the cuisine of recipes using the most frequent ingredients in the dataset, the orange line ($) is the n most frequent ingredients in each cuisine, the green line (&) is the ingredients in the fewest cuisines that are in the set of the 100 most frequent ingredients of a cuisine, the red line (*) is the ingredients in the most cuisines that are in the set of the 100 most frequent ingredients of a cuisine.
+</p>
+<p>
+Interestingly the orange (\$) line is strictly greater than the blue (#) line, suggesting its always better to select the most frequent n ingredients of each cuisine rather than the most frequent ingredients in the dataset. The green (&) and red (*) lines swept the fraction of ingredients selected from the orange (\$) line for n=100 from 0.05 to 1 in increments of 0.05. This implies that all three lines should converge at the right side of the graph, however there must be a bit of randomness in the model's training as this does not quite occur. But the real take away is that if the ingredients shared across the most cuisines are removed, initially it does not effect the models accuracy. So for instance perhaps removing water, which is an ingredient in all 20 cuisines, would not reduce the models accuracy. However this does not last long and as more ingredients are removed which are in many cuisine's, the models accuracy decreases substantially even falling below the red (*) line. Perhaps this is due to ingredients that are shared across a lot of cuisines being frequent ingredients, such that if 50% of them are removed a lot of recipes will have no ingredients making them impossible to classify. I have not verified this, its just a guess.
 </p>
 </div>
 </body>

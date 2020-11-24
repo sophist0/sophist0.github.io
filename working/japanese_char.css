@@ -1,0 +1,15 @@
+.ex_img_wrap{
+	width: 100%;
+	height: 625px;
+	clear: both;
+}
+.ex_img_l{
+	width: 400px;
+	height: 600px;
+	float: left;
+}
+.ex_img_r{
+	width: 400px;
+	height: 600px;
+	float: right;
+}

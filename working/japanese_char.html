@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Japanese Character Recognition</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="japanese_char.css">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div class="hspacer"></div>
+<div class="content_block">
+<h1>Project and Problems</h1>
+<hr>
+<p>
+This project originated as an attempt to solve a Kaggle challenge: https://www.kaggle.com/c/kuzushiji-recognition/overview/description. The goal of this challenge was to recognize and identify the location of Japanese calligraphic characters in scanned pages of old books. This proved more difficult than it might initially. Some pages in the training set are blank, some contain full page illustrations, mix illustrations and text, or text with irrelevant marginal notes.
+</p>
+<div class="ex_img_wrap">
+<img src="images/japanese_char/umgy012-004.jpg" class="ex_img_l">
+<img src="images/japanese_char/200004148_00051_1.jpg" class="ex_img_r">
+</div>
+<p>
+Never having worked on more than toy computer vision projects I made a fundamental mistake in thinking I could come up with an original approach instead of starting with an existing approach such as using a Region Based Convolutional Neural Networks (R-CNN). This mistake led to me missing the deadline for the project and ending up with substandard results. I guess you live and learn. Still I hope to learn something in the process of writing up these results.
+</p>
+<p>
+Working with a couple hundred dollars of off the shelf hardware meant I was a compute constrained. So I looked for an older less compute intensive deep learning model for image segmentation and another for character recognition. Using TensorFlow as my machine learning framework I choose to try U-Net for the former and MobileNet for the latter. My thinking at the time was that breaking the problem into two discrete steps of segmentation and recognition might make the problem easier. A high level block diagram of the model under training is given below. 
+</p>
+</div>
+</body>
+</html>

@@ -39,7 +39,7 @@ To simplify the problem I choose to only recognize the 500 most frequent charact
 <p>
 The first big problem with this block diagram occurred in the "U-Net Seg. Train Char." and "U-Net Seg. Test Char." blocks. The problem is not with U-Net's segmentation, which performs decently but with the mask ground truth provided. The figures below show the images above overlaid with the mask ground truth masks represented as black rectangles.
 <div class="ex_img_wrap">
-<img src="images/japanese_char/umgy012-004_allmasks.png" class="ex_img_l">
+<img src="images/japanese_char/umgy012-004_allmasks.jpg" class="ex_img_l">
 <img src="images/japanese_char/200004148_00051_1_allmasks.jpg" class="ex_img_r">
 </div>
 </p>
@@ -47,18 +47,38 @@ The first big problem with this block diagram occurred in the "U-Net Seg. Train 
 First clearly not all characters in the left page are masked. Some of these characters are marginal notes, others are characters which are not in the set of the 500 most frequent. Second the masks overlap so training U-Net to segment the ground truth masks of the training set will often result in clusters rather than individual characters being segmented.
 </p>
 <p>
-Predicting characters segmentations based on ground truth segmentations like the ones above produced the following results. (ADD PRED SEG LAYERED IMAGES)
+Predicting characters segmentations based on ground truth segmentations like the ones above produced results along the lines of the following.
+<div class="ex_img_wrap">
+<img src="images/japanese_char/umgy012-004_allpredmasks.jpg" class="ex_img_l">
+<img src="images/japanese_char/200004148_00051_1_allpredmasks.jpg" class="ex_img_r">
+</div><br>
+The image on the left has been lightly edited to recreate the character mask overlap that occurred in my initial testing of U-Net's segmentation as I did not save these results.
 </p>
 <p>
-Initially I tried writing some ad-hoc algorithms to recognize rectangles in these predicted segmentations. It did go well. I realized that I could mitigate this problem by using multiple models to segment different randomly subsets of characters. I broke the 500 most frequent characters into 10 subsets of 500 randomly selected characters. This does not eliminate the problem of overlapping masks but it makes it less frequent. For instance in the images below only the masks from subset 1 are overlaid on the images.
+I attempted writing an algorithms to recognize and separate rectangles in these predicted segmentations but ultimately failed to come up with robust algorithm that would perform this task.
+
+I realized that I could mitigate this problem by using multiple models to segment different randomly subsets of characters. I broke the 500 most frequent characters into 10 subsets of 500 randomly selected characters. This does not eliminate the problem of overlapping masks but it makes it less frequent. For instance in the images below only the masks from subset 1 are overlaid on the images.
 </p>
-ADD IMAGE
+<div class="ex_img_wrap">
+<img src="images/japanese_char/umgy012-004_mask_subset_1.jpg" class="ex_img_l">
+<img src="images/japanese_char/200004148_00051_1_mask_subset_1.jpg" class="ex_img_r">
+</div>
 <p>
-(ADD training parameters for U-Net) The corresponding predicted segmentations for the subset_1 masks by U-Net for the images above are shown below as non-white pixels.
+(ADD training parameters for U-Net) The corresponding predicted segmentations for the subset_1 masks by U-Net for the images above are given below.
 </p>
-ADD IMAGE
+<div class="ex_img_wrap">
+<img src="images/japanese_char/umgy012-004_predmask_subset_1.jpg" class="ex_img_l">
+<img src="images/japanese_char/200004148_00051_1_predmask_subset_1.jpg" class="ex_img_r">
+</div>
 <p>
-As we can see yada yada......
+U-Net's segmentations are not binary. U-Net is 100% sure that a black pixels are part of a character mask and that white pixels are not, however many pixels are grey. Is a light grey pixel part of a characters mask, how about a grey pixel, or a dark grey pixel? There is no correct answer, one could find the threshold that is optimal on the training set and assume it generalizes. I simply choose a threshold XXX and used OpenCV to get bounding boxes of the masked areas of the predicted segmentation. The resulting masks are given below where the bounding boxes are red. 
+</p>
+<div class="ex_img_wrap">
+<img src="images/japanese_char/umgy012-004_predmaskfix_subset_1.jpg" class="ex_img_l">
+<img src="images/japanese_char/200004148_00051_1_predmaskfix_subset_1.jpg" class="ex_img_r">
+</div>
+<p>
+I used these predicted red character bounding boxes to slice the characters out of the training images. I then used these characters to train the MobileNet character recognition model.
 </p>
 </div>
 </body>
